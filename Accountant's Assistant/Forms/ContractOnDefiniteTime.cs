@@ -72,8 +72,8 @@ namespace Accountant_s_Assistant.Forms
             string contractDate = dtpContractDate.Value.ToShortDateString();
             string endofEmployment = dtpEndOfEmployment.Value.ToShortDateString();
             string jobDescription = tbJobDescription.Text.ToString();
-            string trialWorkDuration = cbTrialWorkDuration.SelectedIndex.ToString();
-            string employeeWorkPlace = cbEmployeeWorkplace.SelectedIndex.ToString();
+            string trialWorkDuration = cbTrialWorkDuration.Text;
+            string employeeWorkPlace = cbEmployeeWorkplace.Text;
             string startOfEmployment = dtpStartOfEmployment.Value.ToShortDateString();
             string startOfEmploymentDescription = tbStartOfDeploymentDescription.Text.ToString();
             string sallary = numSallary.Value.ToString();
@@ -84,27 +84,27 @@ namespace Accountant_s_Assistant.Forms
             string sallaryFitD = nummSalaryFitD.Value.ToString();
             string sallaryFitE = nummSalaryFitE.Value.ToString();
             string sallaryFitF = nummSalaryFitF.Value.ToString();
-            string workTimeHalfOrFull = cbWorkTimeHalfOrFull.SelectedIndex.ToString();
+            string workTimeHalfOrFull = cbWorkTimeHalfOrFull.Text;
             string workHoursPerWeek = numWorkHoursPerWeek.Value.ToString();
-            string workTime = cbWorkTime.SelectedIndex.ToString();
+            string workTime = cbWorkTime.Text;
             string workTimeStartA = dtpWorkTimeStartA.Value.ToShortTimeString();
             string workTimeStartB = dtpWorkTimeStartB.Value.ToShortTimeString();
             string workTimeEndA = dtpWorkTimeEndA.Value.ToShortTimeString();
             string workTimeEndB = dtpWorkTimeEndB.Value.ToShortTimeString();
-            string weeklyTimeOff = cbWeeklyTimeOff.SelectedIndex.ToString();
-            string vacation = cbVacation.SelectedIndex.ToString();
+            string weeklyTimeOff = cbWeeklyTimeOff.Text;
+            string vacation = cbVacation.Text;
             string vacationDescription = tbVacationDescription.Text.ToString();
-            string contractCancelation = cbContractCancelation.SelectedIndex.ToString();
+            string contractCancelation = cbContractCancelation.Text;
             string noticePeriodA = numNoticePeriodA.Value.ToString();
             string noticePeriodB = numNoticePeriodB.Value.ToString();
             string rightsAndObligations = tbRightsAndObligations.Text.ToString();
-            string competentCourt = cbCompetentCourt.SelectedIndex.ToString();
+            string competentCourt = cbCompetentCourt.Text;
             string contractEntry = dtpContractEntry.Value.ToShortDateString();
 
             var list = new List<KeyValuePair<string, string>>()
             {
                 new KeyValuePair<string, string>("contractDate", contractDate),
-                new KeyValuePair<string, string>("endofEmployment", endofEmployment),
+                new KeyValuePair<string, string>("endOfEmployment", endofEmployment),
                 new KeyValuePair<string, string>("jobDescription", jobDescription),
                 new KeyValuePair<string, string>("trialWorkDuration", trialWorkDuration),
                 new KeyValuePair<string, string>("employeeWorkPlace", employeeWorkPlace),
@@ -122,10 +122,9 @@ namespace Accountant_s_Assistant.Forms
                 new KeyValuePair<string, string>("workHoursPerWeek", workHoursPerWeek),
                 new KeyValuePair<string, string>("workTime", workTime),
                 new KeyValuePair<string, string>("workTimeStartA", workTimeStartA),
-                new KeyValuePair<string, string>("workTimeEndA", workTimeEndA),
+                new KeyValuePair<string, string>("workTimeEndB", workTimeEndB),
                 new KeyValuePair<string, string>("weeklyTimeOff", weeklyTimeOff),
                 new KeyValuePair<string, string>("vacation", vacation),
-                new KeyValuePair<string, string>("workTimeStartB", workTimeStartB),
                 new KeyValuePair<string, string>("vacationDescription", vacationDescription),
                 new KeyValuePair<string, string>("contractCancelation", contractCancelation),
                 new KeyValuePair<string, string>("noticePeriodA", noticePeriodA),
@@ -139,7 +138,7 @@ namespace Accountant_s_Assistant.Forms
             {
 
                 list.Add(new KeyValuePair<string, string>("workTimeStartB", workTimeStartB));
-                list.Add(new KeyValuePair<string, string>("workTimeEndB", workTimeEndB));
+                list.Add(new KeyValuePair<string, string>("workTimeEndA", workTimeEndA));
             }
             return list;
         }
@@ -217,7 +216,6 @@ namespace Accountant_s_Assistant.Forms
                 {
                     if (string.IsNullOrEmpty(cb.Text) || cb.Text.Equals("Odaberite"))
                     {
-                        MessageBox.Show(cb.Name.ToString());
                         validation = true;
                     }
                 }
@@ -225,7 +223,6 @@ namespace Accountant_s_Assistant.Forms
                 {
                     if (string.IsNullOrEmpty(tb.Text))
                     {
-                        MessageBox.Show(tb.Name.ToString());
                         validation = true;
                     }
                 }
@@ -233,7 +230,6 @@ namespace Accountant_s_Assistant.Forms
                 {
                     if (n.Value.Equals(0) && n != numStimulation)
                     {
-                        MessageBox.Show(n.Name.ToString());
                         validation = true;
                     }
                 }
@@ -278,21 +274,22 @@ namespace Accountant_s_Assistant.Forms
             PDFCreator pdfCreator = new PDFCreator(path);
 
             string pathToContract = pdfCreator.generateContractOnDefinitiveTime(list, employer, employee);
+            MessageBox.Show("Ugovor je spremljen u mapi Moji Dokumenti na Vašem računalu. \nPutanja: " + pathToContract, "Informacija", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void cbWorkTime_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string selectedValue = cbWorkTime.SelectedIndex.ToString();
+            string selectedValue = cbWorkTime.Text;
 
-            if (!selectedValue.Equals("Klizno"))
+            if (selectedValue.Equals("klizno") || selectedValue.Equals("dvokratno"))
             {
-                dtpWorkTimeStartB.Enabled = false;
-                dtpWorkTimeEndB.Enabled = false;
+                dtpWorkTimeStartB.Enabled = true;
+                dtpWorkTimeEndA.Enabled = true;
             }
             else
             {
-                dtpWorkTimeStartB.Enabled = true;
-                dtpWorkTimeEndB.Enabled = true;
+                dtpWorkTimeStartB.Enabled = false;
+                dtpWorkTimeEndA.Enabled = false;
             }
         }
 
@@ -300,6 +297,21 @@ namespace Accountant_s_Assistant.Forms
         {
             Employee employee = getContractFormEmployee();
             tbEmployeeVAT.Text = employee.VAT;
+        }
+
+        private void cbWorkTimeHalfOrFull_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selectedValue = cbWorkTimeHalfOrFull.Text;
+            if (selectedValue.Equals("puno"))
+            {
+                numWorkHoursPerWeek.Minimum = 40;
+                numWorkHoursPerWeek.Value = 40;
+            }
+            else
+            {
+                numWorkHoursPerWeek.Minimum = 1;
+                numWorkHoursPerWeek.Value = 1;
+            }
         }
     }
 }

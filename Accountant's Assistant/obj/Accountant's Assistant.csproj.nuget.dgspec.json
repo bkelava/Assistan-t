@@ -43,18 +43,6 @@
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.1, )"
-            },
-            "PdfSharp": {
-              "target": "Package",
-              "version": "[1.50.5147, )"
-            },
-            "System.Drawing.Common": {
-              "target": "Package",
-              "version": "[6.0.0, )"
-            },
-            "System.Text.Encoding.CodePages": {
-              "target": "Package",
-              "version": "[6.0.0, )"
             }
           },
           "imports": [

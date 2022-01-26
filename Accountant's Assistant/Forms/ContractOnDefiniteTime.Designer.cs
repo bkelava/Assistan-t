@@ -866,6 +866,7 @@ namespace Accountant_s_Assistant.Forms
             this.cbWorkTimeHalfOrFull.Size = new System.Drawing.Size(107, 22);
             this.cbWorkTimeHalfOrFull.TabIndex = 60;
             this.cbWorkTimeHalfOrFull.Text = "Odaberite";
+            this.cbWorkTimeHalfOrFull.SelectedIndexChanged += new System.EventHandler(this.cbWorkTimeHalfOrFull_SelectedIndexChanged);
             // 
             // label40
             // 
@@ -1225,7 +1226,7 @@ namespace Accountant_s_Assistant.Forms
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(571, 279);
+            this.label22.Location = new System.Drawing.Point(582, 279);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(16, 14);
             this.label22.TabIndex = 33;
@@ -1233,7 +1234,7 @@ namespace Accountant_s_Assistant.Forms
             // 
             // tbStartOfDeploymentDescription
             // 
-            this.tbStartOfDeploymentDescription.Location = new System.Drawing.Point(307, 271);
+            this.tbStartOfDeploymentDescription.Location = new System.Drawing.Point(318, 271);
             this.tbStartOfDeploymentDescription.Name = "tbStartOfDeploymentDescription";
             this.tbStartOfDeploymentDescription.Size = new System.Drawing.Size(258, 22);
             this.tbStartOfDeploymentDescription.TabIndex = 32;
@@ -1241,7 +1242,7 @@ namespace Accountant_s_Assistant.Forms
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(289, 279);
+            this.label21.Location = new System.Drawing.Point(300, 279);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(12, 14);
             this.label21.TabIndex = 31;
@@ -1250,12 +1251,11 @@ namespace Accountant_s_Assistant.Forms
             // dtpStartOfEmployment
             // 
             this.dtpStartOfEmployment.Checked = false;
-            this.dtpStartOfEmployment.CustomFormat = "HH:mm";
+            this.dtpStartOfEmployment.CustomFormat = "";
             this.dtpStartOfEmployment.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpStartOfEmployment.Location = new System.Drawing.Point(181, 271);
             this.dtpStartOfEmployment.Name = "dtpStartOfEmployment";
-            this.dtpStartOfEmployment.ShowUpDown = true;
-            this.dtpStartOfEmployment.Size = new System.Drawing.Size(102, 22);
+            this.dtpStartOfEmployment.Size = new System.Drawing.Size(113, 22);
             this.dtpStartOfEmployment.TabIndex = 30;
             // 
             // label20
