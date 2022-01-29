@@ -116,6 +116,7 @@ namespace Accountant_s_Assistant.Forms
                 MessageBox.Show("OIB može sadržavati isključivo 11 znamenki.", "Upozorenje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 VATtext = VATtext.Substring(0, VATtext.Length - 1);
                 tbEmployerVAT.Text = VATtext;
+                tbEmployerVAT.SelectionStart = tbEmployerVAT.TextLength;
                 return;
             }
         }
@@ -130,6 +131,7 @@ namespace Accountant_s_Assistant.Forms
                 MessageBox.Show("Poštanski broj može sadržavati isključivo 5 znamenki.", "Upozorenje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 postalText = postalText.Substring(0, postalText.Length - 1);
                 tbEmployerPostal.Text = postalText;
+                tbEmployerPostal.SelectionStart = tbEmployerPostal.TextLength;
                 return;
             }
         }

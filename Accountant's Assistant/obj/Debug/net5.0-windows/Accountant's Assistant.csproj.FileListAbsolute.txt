@@ -22,3 +22,4 @@ C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\obj\D
 C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\obj\Debug\net5.0-windows\ref\Accountant's Assistant.dll
 C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\obj\Debug\net5.0-windows\Accountant's Assistant.pdb
 C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\obj\Debug\net5.0-windows\Accountant's Assistant.genruntimeconfig.cache
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\obj\Debug\net5.0-windows\Accountant's Assistant.csproj.AssemblyReference.cache
