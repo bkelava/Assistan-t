@@ -24,6 +24,7 @@ namespace Accountant_s_Assistant
         private void Form1_Load(object sender, EventArgs e)
         {
             ApplicationManager.setUpEnviroment();
+            App.EventHandler.sentFromForm1 = false;
         }
 
         private void btnCloseProgram_Click(object sender, EventArgs e)
@@ -39,7 +40,7 @@ namespace Accountant_s_Assistant
         private void btnContractOnDefinitvePeriod_Click(object sender, EventArgs e)
         {
             labelTitle.Text = "Ugovor o radu na određeno vrijeme";
-            ApplicationManager.switchForm(this, new ContractOnDefiniteTime());
+            ApplicationManager.switchForm(this, new ContractOnDefiniteTime(), true);
         }
 
         private void btnCloseProgram_MouseHover(object sender, EventArgs e)
@@ -50,6 +51,13 @@ namespace Accountant_s_Assistant
         private void btnMinimize_MouseHover(object sender, EventArgs e)
         {
             mainFormHelper.Show("Minimiziraj prozor", btnMinimize);
+        }
+
+        private void btnEmployers_Click(object sender, EventArgs e)
+        {
+            ApplicationManager.putFromIntoPanel(new EmployerForm(), panelForm);
+            btnEmployers.Hide();
+            App.EventHandler.sentFromForm1 = true;
         }
     }
 }

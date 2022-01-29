@@ -168,19 +168,19 @@ namespace Accountant_s_Assistant.Forms
             {
                 if (subctrl is TextBox)
                     subctrl.TextChanged +=
-                        new EventHandler(InputControls_OnChange);
+                        new System.EventHandler(InputControls_OnChange);
                 else if (subctrl is CheckBox)
                     ((CheckBox)subctrl).CheckedChanged +=
-                        new EventHandler(InputControls_OnChange);
+                        new System.EventHandler(InputControls_OnChange);
                 else if (subctrl is RadioButton)
                     ((RadioButton)subctrl).CheckedChanged +=
-                        new EventHandler(InputControls_OnChange);
+                        new System.EventHandler(InputControls_OnChange);
                 else if (subctrl is ListBox)
                     ((ListBox)subctrl).SelectedIndexChanged +=
-                        new EventHandler(InputControls_OnChange);
+                        new System.EventHandler(InputControls_OnChange);
                 else if (subctrl is ComboBox)
                     ((ComboBox)subctrl).SelectedIndexChanged +=
-                        new EventHandler(InputControls_OnChange);
+                        new System.EventHandler(InputControls_OnChange);
                 else
                 {
                     if (subctrl.Controls.Count > 0)
@@ -253,7 +253,7 @@ namespace Accountant_s_Assistant.Forms
 
         private void btnCloseContractForm_Click(object sender, EventArgs e)
         {
-            ApplicationManager.switchForm(this, new Form1());
+            ApplicationManager.switchForm(this, new Form1(), true);
         }
 
         private void cbEmployer_SelectedIndexChanged(object sender, EventArgs e)
@@ -312,6 +312,11 @@ namespace Accountant_s_Assistant.Forms
                 numWorkHoursPerWeek.Minimum = 1;
                 numWorkHoursPerWeek.Value = 1;
             }
+        }
+
+        private void btnOpenEmployerForm_Click(object sender, EventArgs e)
+        {
+            ApplicationManager.switchForm(this, new EmployerForm(), true);
         }
     }
 }

@@ -104,7 +104,7 @@ namespace Accountant_s_Assistant.App
             excelSheet.Cells["58", "I"].Value = employer.Director;
             excelSheet.Cells["58", "B"].Value = employee.Name;
 
-            path = Path.Combine(this.path, "[ASISTENT] "employee.Name + " " + employer.Name + ".pdf");
+            path = Path.Combine(this.path, "[ASISTENT] " + employee.Name + " " + employer.Name + ".pdf");
             wb.ExportAsFixedFormat(XlFixedFormatType.xlTypePDF, path);
 
             //closing app
