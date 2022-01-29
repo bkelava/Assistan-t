@@ -10,13 +10,46 @@ namespace Accountant_s_Assistant.App
         private static string path = "";
         private static string dir = "";
 
-        public static void switchForm(Form oldForm, Form newForm)
-        {
-            oldForm.Enabled = false;
-            oldForm.Hide();
 
-            newForm.Enabled = true;
-            newForm.Show();
+        public static void closeForm(Form form)
+        {
+            form.Close();
+        }
+        public static void switchForm(bool close, Form oldForm, Form newForm)
+        {
+            if (close)
+            {
+                oldForm.Enabled = false;
+                oldForm.Close();
+
+                newForm.Enabled = true;
+            }
+            else
+            {
+                oldForm.Enabled = false;
+                oldForm.Hide();
+
+                newForm.Enabled = true;
+            }
+        }
+
+        public static void switchForm(Form oldForm, Form newForm, bool hide)
+        {
+            if (hide)
+            {
+                oldForm.Enabled = false;
+                oldForm.Hide();
+
+                newForm.Enabled = true;
+                newForm.Show();
+            }
+            else
+            {
+                oldForm.Enabled = false;
+
+                newForm.Enabled = true;
+                newForm.Show();
+            }
         }
 
         public static void putFromIntoPanel(Form form, Panel panel)

@@ -2,6 +2,7 @@
 using Accountant_s_Assistant.Forms;
 using Accountant_s_Assistant.Properties;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,6 +16,14 @@ namespace Accountant_s_Assistant.Database
             //empty
         }
 
+        private static void appendToJsonFile(string filename, string json)
+        {
+            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Database/" + filename);
+            using (StreamWriter sw = new StreamWriter(path, false))
+            {
+                sw.Write(json);
+            }
+        }
         private static string readJsonFromFile(string path)
         {
 
@@ -43,6 +52,23 @@ namespace Accountant_s_Assistant.Database
             }
 
             return items;
+        }
+
+        public static void insertIntoEmployers(Employer employer)
+        {
+            List<Employer> items = getAllEmployers();
+            
+            int id = int.Parse(items[items.Count - 1].Id);
+            id = id + 1;
+            employer.Id = id.ToString();
+            items.Add(employer);
+
+            JArray array = JArray.FromObject(items);
+            JObject jObject = new JObject();
+            jObject["Employer"] = array;
+
+            string json = jObject.ToString();
+            appendToJsonFile("employer.json", json);
         }
 
         public static List<Employer> getAllEmployers()

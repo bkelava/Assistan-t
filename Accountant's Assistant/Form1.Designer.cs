@@ -45,10 +45,12 @@ namespace Accountant_s_Assistant
             this.btnMinimize = new System.Windows.Forms.Button();
             this.btnCloseProgram = new System.Windows.Forms.Button();
             this.panelForm = new System.Windows.Forms.Panel();
+            this.btnEmployers = new System.Windows.Forms.Button();
             this.mainFormHelper = new System.Windows.Forms.ToolTip(this.components);
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panelForm.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -250,11 +252,25 @@ namespace Accountant_s_Assistant
             // 
             // panelForm
             // 
+            this.panelForm.Controls.Add(this.btnEmployers);
             this.panelForm.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelForm.Location = new System.Drawing.Point(257, 38);
             this.panelForm.Name = "panelForm";
             this.panelForm.Size = new System.Drawing.Size(923, 618);
             this.panelForm.TabIndex = 5;
+            // 
+            // btnEmployers
+            // 
+            this.btnEmployers.FlatAppearance.BorderSize = 0;
+            this.btnEmployers.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEmployers.ForeColor = System.Drawing.Color.White;
+            this.btnEmployers.Location = new System.Drawing.Point(65, 54);
+            this.btnEmployers.Name = "btnEmployers";
+            this.btnEmployers.Size = new System.Drawing.Size(153, 77);
+            this.btnEmployers.TabIndex = 0;
+            this.btnEmployers.Text = "Popis i unos poslodavaca";
+            this.btnEmployers.UseVisualStyleBackColor = true;
+            this.btnEmployers.Click += new System.EventHandler(this.btnEmployers_Click);
             // 
             // Form1
             // 
@@ -276,6 +292,7 @@ namespace Accountant_s_Assistant
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.panel2.ResumeLayout(false);
+            this.panelForm.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -297,6 +314,7 @@ namespace Accountant_s_Assistant
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Panel panelForm;
         private System.Windows.Forms.ToolTip mainFormHelper;
+        private System.Windows.Forms.Button btnEmployers;
     }
 }
 

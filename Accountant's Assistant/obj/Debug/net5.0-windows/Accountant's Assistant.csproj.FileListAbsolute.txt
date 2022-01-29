@@ -6,11 +6,11 @@ C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\bin\D
 C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\bin\Debug\net5.0-windows\ref\Accountant's Assistant.dll
 C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\bin\Debug\net5.0-windows\Accountant's Assistant.pdb
 C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\bin\Debug\net5.0-windows\Newtonsoft.Json.dll
-C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\obj\Debug\net5.0-windows\Accountant's Assistant.csproj.AssemblyReference.cache
 C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\obj\Debug\net5.0-windows\Interop.Microsoft.Office.Interop.Excel.dll
 C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\obj\Debug\net5.0-windows\Accountant's Assistant.csproj.ResolveComReference.cache
 C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\obj\Debug\net5.0-windows\Accountant_s_Assistant.Form1.resources
 C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\obj\Debug\net5.0-windows\Accountant_s_Assistant.Forms.ContractOnDefiniteTime.resources
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\obj\Debug\net5.0-windows\Accountant_s_Assistant.Forms.EmployerForm.resources
 C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\obj\Debug\net5.0-windows\Accountant_s_Assistant.Properties.Resources.resources
 C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\obj\Debug\net5.0-windows\Accountant's Assistant.csproj.GenerateResource.cache
 C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\obj\Debug\net5.0-windows\Accountant's Assistant.GeneratedMSBuildEditorConfig.editorconfig

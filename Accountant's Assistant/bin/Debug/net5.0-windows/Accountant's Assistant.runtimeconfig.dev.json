@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\KELAVA\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\KELAVA\\.nuget\\packages"
+    ]
+  }
+}

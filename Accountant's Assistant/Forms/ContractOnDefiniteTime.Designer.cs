@@ -208,6 +208,7 @@ namespace Accountant_s_Assistant.Forms
             this.btnOpenEmployerForm.TabIndex = 3;
             this.btnOpenEmployerForm.Text = "POPIS I DODAVANJE POSLODAVACA";
             this.btnOpenEmployerForm.UseVisualStyleBackColor = true;
+            this.btnOpenEmployerForm.Click += new System.EventHandler(this.btnOpenEmployerForm_Click);
             // 
             // btnSaveToPDF
             // 
@@ -1559,7 +1560,6 @@ namespace Accountant_s_Assistant.Forms
             this.Name = "ContractOnDefiniteTime";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ContractOnDefiniteTime";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.ContractOnDefiniteTime_Load);
             this.panel2.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
