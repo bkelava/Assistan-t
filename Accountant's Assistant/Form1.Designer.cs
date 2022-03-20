@@ -35,7 +35,7 @@ namespace Accountant_s_Assistant
             this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnGfiPod = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.btnContractOnDefinitivePeriod = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -58,7 +58,7 @@ namespace Accountant_s_Assistant
             this.panel1.Controls.Add(this.button5);
             this.panel1.Controls.Add(this.button4);
             this.panel1.Controls.Add(this.button3);
-            this.panel1.Controls.Add(this.button2);
+            this.panel1.Controls.Add(this.btnGfiPod);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.btnContractOnDefinitivePeriod);
             this.panel1.Controls.Add(this.panel3);
@@ -122,23 +122,24 @@ namespace Accountant_s_Assistant
             this.button3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.button3.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // btnGfiPod
             // 
-            this.button2.AutoSize = true;
-            this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button2.FlatAppearance.BorderSize = 0;
-            this.button2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button2.ForeColor = System.Drawing.Color.LavenderBlush;
-            this.button2.Location = new System.Drawing.Point(0, 287);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(257, 86);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "TBC";
-            this.button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnGfiPod.AutoSize = true;
+            this.btnGfiPod.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnGfiPod.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnGfiPod.FlatAppearance.BorderSize = 0;
+            this.btnGfiPod.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.btnGfiPod.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGfiPod.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnGfiPod.ForeColor = System.Drawing.Color.LavenderBlush;
+            this.btnGfiPod.Location = new System.Drawing.Point(0, 287);
+            this.btnGfiPod.Name = "btnGfiPod";
+            this.btnGfiPod.Size = new System.Drawing.Size(257, 86);
+            this.btnGfiPod.TabIndex = 3;
+            this.btnGfiPod.Text = "Popratni izvještaji uz \r\nGFI POD";
+            this.btnGfiPod.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnGfiPod.UseVisualStyleBackColor = true;
+            this.btnGfiPod.Click += new System.EventHandler(this.btnGfiPod_Click);
             // 
             // button1
             // 
@@ -154,7 +155,7 @@ namespace Accountant_s_Assistant
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(257, 86);
             this.button1.TabIndex = 2;
-            this.button1.Text = "TBC";
+            this.button1.Text = "Ugovor o radu na neodređeno vrijeme";
             this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.button1.UseVisualStyleBackColor = true;
             // 
@@ -172,7 +173,7 @@ namespace Accountant_s_Assistant
             this.btnContractOnDefinitivePeriod.Name = "btnContractOnDefinitivePeriod";
             this.btnContractOnDefinitivePeriod.Size = new System.Drawing.Size(257, 86);
             this.btnContractOnDefinitivePeriod.TabIndex = 1;
-            this.btnContractOnDefinitivePeriod.Text = "Ugovor o radu na \r\nneodređeno vrijeme";
+            this.btnContractOnDefinitivePeriod.Text = "Ugovor o radu na \r\nodređeno vrijeme";
             this.btnContractOnDefinitivePeriod.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnContractOnDefinitivePeriod.UseVisualStyleBackColor = true;
             this.btnContractOnDefinitivePeriod.Click += new System.EventHandler(this.btnContractOnDefinitvePeriod_Click);
@@ -311,7 +312,7 @@ namespace Accountant_s_Assistant
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnGfiPod;
         private System.Windows.Forms.Panel panelForm;
         private System.Windows.Forms.ToolTip mainFormHelper;
         private System.Windows.Forms.Button btnEmployers;

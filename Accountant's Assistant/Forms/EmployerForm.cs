@@ -15,6 +15,9 @@ namespace Accountant_s_Assistant.Forms
 {
     public partial class EmployerForm : Form
     {
+        private bool toggleBtnInsertMode;
+        private Employer employer;
+        private List<Employer> list;
         public EmployerForm()
         {
             InitializeComponent();
@@ -82,6 +85,16 @@ namespace Accountant_s_Assistant.Forms
             tbEmployerPostal.Text = "";
             tbEmployerVAT.Text = "";
             tbEmployerDirector.Text = "";
+
+            if (toggleBtnInsertMode)
+            {
+                btnInsert.Text = "Unesi";
+                toggleBtnInsertMode = false;
+            }
+            else
+            {
+                btnInsert.Text = "Unesi";
+            }
         }
 
         private void setTextBoxMaxLength()
@@ -96,14 +109,61 @@ namespace Accountant_s_Assistant.Forms
 
         private void EmployerForm_Load(object sender, EventArgs e)
         {
-            validation = true;
+            init();
             setTextBoxMaxLength();
             clearFields();
+            populateDataGridView();
+        }
+
+        private void init()
+        {
+            validation = true;
+            employer = null;
+            toggleBtnInsertMode = false;
+            list = DatabaseManager.getAllEmployers();
+        }
+
+        private void populateDataGridView()
+        {
+            dgvEmployers.Columns.Add("Id", "Id");
+            dgvEmployers.Columns.Add("Name", "Naziv");
+            dgvEmployers.Columns.Add("Address", "Adresa");
+            dgvEmployers.Columns.Add("VAT", "OIB");
+            dgvEmployers.Columns.Add("Director", "Direktor");
+
+            for (int i = 0; i <list.Count; i++)
+            {
+                dgvEmployers.Rows.Add(
+                    list[i].Id,
+                    list[i].Name,
+                    list[i].Address.Street + ", " + list[i].Address.PostalCode + " " + list[i].Address.City,
+                    list[i].VAT,
+                    list[i].Director
+                    );
+            }
+            /*foreach (DataGridViewRow row in dgvEmployers.Rows)
+            {
+                employer = list.Find(x => x.Id.Equals(row.Cells["Id"].Value.ToString()));
+                dgvEmployers[columnName, index].Value = "2";//(employer.Address.Street + ", " + employer.Address.PostalCode + " " + employer.Address.City).ToString();
+            }*/
         }
 
         private void btnInsert_Click(object sender, EventArgs e)
         {
-            addEmployer();
+            if (toggleBtnInsertMode)
+            {
+                alterEmployer();
+            }
+            else
+            {
+                addEmployer();
+            }
+        }
+
+        private void alterEmployer()
+        {
+            DatabaseManager.alterEmployer(employer);
+            
         }
 
         private void tbEmployerVAT_TextChanged(object sender, EventArgs e)
@@ -134,6 +194,29 @@ namespace Accountant_s_Assistant.Forms
                 tbEmployerPostal.SelectionStart = tbEmployerPostal.TextLength;
                 return;
             }
+        }
+
+        private void dgvEmployers_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            toggleBtnInsertMode = true;
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = this.dgvEmployers.Rows[e.RowIndex];
+                employer = list.Find(x => x.Id.Equals(row.Cells["Id"].Value.ToString()));
+
+                tbEmployerName.Text = employer.Name;
+                tbEmployerStreet.Text = employer.Address.Street;
+                tbEmployerCity.Text = employer.Address.City;
+                tbEmployerPostal.Text = employer.Address.PostalCode;
+                tbEmployerVAT.Text = employer.VAT;
+                tbEmployerDirector.Text = employer.Director;
+            }
+            btnInsert.Text = "Promijeni\npodatke";
+        }
+
+        private void btnClearFields_Click(object sender, EventArgs e)
+        {
+            clearFields();
         }
     }
 }

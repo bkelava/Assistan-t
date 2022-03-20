@@ -10,5 +10,11 @@
     <Compile Update="Forms\EmployerForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\GfiPod.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Resources\TextProgressBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

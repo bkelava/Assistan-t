@@ -64,7 +64,7 @@ namespace Accountant_s_Assistant.Forms
             tbStartOfDeploymentDescription.Text = "-";
             tbVacationDescription.Text = "-";
             tbRightsAndObligations.Text = "-";
-            cbCompetentCourt.Text = "-";
+            tbContractEntryComment.Text = "-";
         }
 
         private List<KeyValuePair<string, string>> getContractFormData()
@@ -100,6 +100,7 @@ namespace Accountant_s_Assistant.Forms
             string rightsAndObligations = tbRightsAndObligations.Text.ToString();
             string competentCourt = cbCompetentCourt.Text;
             string contractEntry = dtpContractEntry.Value.ToShortDateString();
+            string contractEntryComment = tbContractEntryComment.Text.ToString();
 
             var list = new List<KeyValuePair<string, string>>()
             {
@@ -131,7 +132,8 @@ namespace Accountant_s_Assistant.Forms
                 new KeyValuePair<string, string>("noticePeriodB", noticePeriodB),
                 new KeyValuePair<string, string>("rightsAndObligations", rightsAndObligations),
                 new KeyValuePair<string, string>("competentCourt", competentCourt),
-                new KeyValuePair<string, string>("contractEntry", contractEntry)
+                new KeyValuePair<string, string>("contractEntry", contractEntry),
+                new KeyValuePair<string, string>("contractEntryComment", contractEntryComment)
             };
 
             if (dtpWorkTimeEndB.Enabled)

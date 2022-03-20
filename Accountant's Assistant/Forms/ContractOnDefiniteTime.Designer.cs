@@ -143,6 +143,7 @@ namespace Accountant_s_Assistant.Forms
             this.label3 = new System.Windows.Forms.Label();
             this.cbEmployer = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.tbContractEntryComment = new System.Windows.Forms.TextBox();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numNoticePeriodB)).BeginInit();
@@ -251,6 +252,7 @@ namespace Accountant_s_Assistant.Forms
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.tbContractEntryComment);
             this.panel3.Controls.Add(this.cbCompetentCourt);
             this.panel3.Controls.Add(this.dtpContractEntry);
             this.panel3.Controls.Add(this.dtpWorkTimeEndB);
@@ -1547,6 +1549,13 @@ namespace Accountant_s_Assistant.Forms
             this.label2.TabIndex = 0;
             this.label2.Text = "Između";
             // 
+            // tbContractEntryComment
+            // 
+            this.tbContractEntryComment.Location = new System.Drawing.Point(342, 970);
+            this.tbContractEntryComment.Name = "tbContractEntryComment";
+            this.tbContractEntryComment.Size = new System.Drawing.Size(258, 22);
+            this.tbContractEntryComment.TabIndex = 109;
+            // 
             // ContractOnDefiniteTime
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1692,5 +1701,6 @@ namespace Accountant_s_Assistant.Forms
         private System.Windows.Forms.DateTimePicker dtpContractEntry;
         private System.Windows.Forms.Button btnCloseContractForm;
         private System.Windows.Forms.ComboBox cbCompetentCourt;
+        private System.Windows.Forms.TextBox tbContractEntryComment;
     }
 }

@@ -59,5 +59,10 @@ namespace Accountant_s_Assistant
             btnEmployers.Hide();
             App.EventHandler.sentFromForm1 = true;
         }
+
+        private void btnGfiPod_Click(object sender, EventArgs e)
+        {
+            ApplicationManager.switchForm(this, new GfiPod(), true);
+        }
     }
 }

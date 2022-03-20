@@ -3,8 +3,9 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Office.Interop.Excel;
 using System.IO;
-using System.Text.RegularExpressions;
 using System.Diagnostics;
+using System.Globalization;
+using System.Threading;
 
 namespace Accountant_s_Assistant.App
 {
@@ -16,30 +17,28 @@ namespace Accountant_s_Assistant.App
             this.path = path;
         }
 
-        private string SplitToLines(string stringToSplit, int maximumLineLength)
+        private string splitToLines(string stringToSplit, int maximumLineLength)
         {
-            return Regex.Replace(stringToSplit, @"(.{1," + maximumLineLength + @"})(?:\s|$)", "$1\n");
-        }
+            if (stringToSplit.Length > maximumLineLength)
+                stringToSplit = stringToSplit.Insert(128, Environment.NewLine);
 
-        private void killExcelProcesses()
-        {
-            foreach (Process clsProcess in Process.GetProcesses())
-            {
-                if (clsProcess.ProcessName.Equals("Microsoft Excel"))
-                {
-                    clsProcess.Kill();
-                    break;
-                }
-            }
+            return stringToSplit;
         }
 
         public string generateContractOnDefinitiveTime(List<KeyValuePair<string, string>> list, Employer employer, Employee employee)
         {
-            killExcelProcesses();
+            ApplicationManager.killExcelProcesses();
 
             string path = Path.Combine(Directory.GetCurrentDirectory(), "../../../Resources/template.xlsx");
             string pathToTempFile = Path.Combine(this.path, "tempfile.xlsx");
-            File.WriteAllBytes(pathToTempFile, File.ReadAllBytes(path));
+            try
+            {
+                File.WriteAllBytes(pathToTempFile, File.ReadAllBytes(path));
+            }
+            catch(Exception e)
+            {
+                EventLog.WriteEntry(e.ToString(), "ERROR");
+            }
             
             Application excel = new Application();
             Workbook wb = excel.Workbooks.Open(pathToTempFile);
@@ -94,12 +93,14 @@ namespace Accountant_s_Assistant.App
             excelSheet.Cells["45", "F"].Value = list.Find(x => x.Key == "noticePeriodA").Value;
             excelSheet.Cells["46", "C"].Value = list.Find(x => x.Key == "noticePeriodB").Value;
 
-            string rightsAndObligations = list.Find(x => x.Key == "stimulation").Value;
-            rightsAndObligations = SplitToLines(rightsAndObligations, 128);
+            string rightsAndObligations = list.Find(x => x.Key == "rightsAndObligations").Value;
+            rightsAndObligations = splitToLines(rightsAndObligations, 128);
             excelSheet.Cells["49", "A"].Value = rightsAndObligations;
+            excelSheet.Cells["50", "A"].Value = "";
 
             excelSheet.Cells["53", "G"].Value = list.Find(x => x.Key == "competentCourt").Value;
             excelSheet.Cells["54", "D"].Value = list.Find(x => x.Key == "contractEntry").Value;
+            excelSheet.Cells["54", "F"].Value = list.Find(x => x.Key == "contractEntryComment").Value;
 
             excelSheet.Cells["58", "I"].Value = employer.Director;
             excelSheet.Cells["58", "B"].Value = employee.Name;
@@ -114,8 +115,198 @@ namespace Accountant_s_Assistant.App
             excel.Quit();
             File.Delete(pathToTempFile);
 
-            killExcelProcesses();
+            ApplicationManager.killExcelProcesses();
             return path;
+        }
+        
+        private string parseMonthNumber(string number)
+        {
+            if (number.Equals("1"))
+            {
+                return "siječnja";
+            }
+            else if (number.Equals("2"))
+            {
+                return "veljače";
+            }
+            else if (number.Equals("3"))
+            {
+                return "ožujka";
+            }
+            else if (number.Equals("4"))
+            {
+                return "travnja";
+            }
+            else if (number.Equals("5"))
+            {
+                return "svibnja";
+            }
+            else if (number.Equals("6"))
+            {
+                return "lipnja";
+            }
+            else if (number.Equals("7"))
+            {
+                return "srpnja";
+            }
+            else if (number.Equals("8"))
+            {
+                return "kolovoza";
+            }
+            else if (number.Equals("9"))
+            {
+                return "srpnja";
+            }
+            else if (number.Equals("10"))
+            {
+                return "listopada";
+            }
+            else if (number.Equals("11"))
+            {
+                return "studenog";
+            }
+            else
+            {
+                return "prosinca";
+            }
+        }
+        private string createCroatianDate()
+        {
+            string day = DateTime.Now.Day.ToString();
+            string month = DateTime.Now.Month.ToString();
+            string year = DateTime.Now.Year.ToString();
+
+            string croatianMonthName = parseMonthNumber(month);
+
+            string croatianDate = day + ". " + croatianMonthName + " " + year + ".";
+            return croatianDate;
+        }
+
+        private string createDecimalString(double number)
+        {
+            var nfi = new NumberFormatInfo();
+            nfi.NumberDecimalSeparator = ",";
+            nfi.NumberGroupSeparator = ".";
+            var value = number.ToString("N2", nfi);
+            return value;
+        }
+
+        public int generateGfiReport1(string gfiPodPath)
+        {
+            ApplicationManager.killExcelProcesses();
+
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "../../../Resources/template_odluka.xlsx");
+            string pathToTempFile = Path.Combine(this.path, "tempfile.xlsx");
+            try
+            {
+                File.WriteAllBytes(pathToTempFile, File.ReadAllBytes(path));
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.ToString());
+            }
+
+            Application excelToWrite = new Application();
+            Workbook wbToWrite = excelToWrite.Workbooks.Open(pathToTempFile);
+            Worksheet excelSheetToWrite = (Worksheet)wbToWrite.ActiveSheet;
+
+            Application excelToRead = new Application();
+            Workbook wbToRead = excelToRead.Workbooks.Open(gfiPodPath);
+            Worksheet excelSheetToRead = null;
+
+            bool check = false;
+            foreach(Worksheet sheet in wbToRead.Sheets)
+            {
+                if (sheet.Name == "RefStr")
+                {
+                    check = true;
+                }
+            }
+            if (check)
+            {
+                excelSheetToRead = (Worksheet)wbToRead.Worksheets["RefStr"];
+            }
+            else
+            {
+                wbToWrite.Saved = true;
+                wbToWrite.Save();
+                excelToWrite.Quit();
+
+                excelToRead.Quit();
+                ApplicationManager.killExcelProcesses();
+                Thread.Sleep(100); //wait 1 second to kill all processes
+                File.Delete(pathToTempFile);
+                return ErrorCodes.Error;
+            }
+
+
+            string company = excelSheetToRead.Cells["29", "C"].Value;
+            string city = excelSheetToRead.Cells["31", "F"].Value;
+            string address = excelSheetToRead.Cells["33", "C"].Value;
+            string idNumber = excelSheetToRead.Cells["27", "C"].Value;
+            string currentDate = createCroatianDate();
+
+            string reportInformation = company + " iz mjesta " + city + ", ul. " + address + ", OIB: " + idNumber + ",";
+            excelSheetToWrite.Cells["3", "A"].Value = reportInformation;
+
+            reportInformation = "donijela je " + currentDate + " ovu";
+            excelSheetToWrite.Cells["4", "A"].Value = reportInformation;
+
+            excelSheetToWrite.Cells["32", "F"].Value = excelSheetToRead.Cells["75", "A"].Value;
+
+            excelSheetToRead = (Worksheet)wbToRead.Worksheets["RDG"];
+
+            double value1 = 0.00;
+            double value2 = 0.00;
+            double value3 = 0.00;
+
+            value1 = excelSheetToRead.Cells["67", "J"].Value;
+            value2 = excelSheetToRead.Cells["68", "J"].Value;
+
+            string stringValue1 = createDecimalString(value1);
+            string stringValue2 = createDecimalString(value2);
+
+            reportInformation = "oporezivanja u svoti od " + stringValue1 + "kn (odnosno gubitaka u svoti od " + stringValue2 + " kn).";
+            excelSheetToWrite.Cells["22", "A"].Value = reportInformation;
+
+            excelSheetToRead = (Worksheet)wbToRead.Worksheets["Bilanca"];
+
+            value3 = excelSheetToRead.Cells["73", "J"].Value;
+            string stringValue3 = createDecimalString(value3);
+
+            string curranteDate = createCroatianDate();
+
+            reportInformation = "Bilanca na dan " + curranteDate + " iskazuje zbroj aktive odnosno pasive u svoti od " + stringValue3 + " kn.";
+            excelSheetToWrite.Cells["24", "A"].Value = reportInformation;
+
+            path = Path.Combine(this.path, "[ASISTENT] " + company + " ODLUKA O UTVR. FIN. IZVJEŠĆA" + ".pdf");
+            wbToWrite.ExportAsFixedFormat(XlFixedFormatType.xlTypePDF, path);
+
+            //closing app
+            wbToWrite.Saved = true;
+            wbToWrite.Save();
+            //wbToWrite.Save//Save();
+            wbToWrite.Close();
+            excelToWrite.Quit();
+
+            excelToRead.Quit();
+            File.Delete(pathToTempFile);
+
+            ApplicationManager.killExcelProcesses();
+
+            return ErrorCodes.NoError;
+        }
+        public int generateGfiPodReport(string gfiPodPath)
+        {
+            int report1ErrorCode = generateGfiReport1(gfiPodPath);
+            if (report1ErrorCode == ErrorCodes.NoError)
+            {
+                return ErrorCodes.NoError;
+            }
+            else
+            {
+                return ErrorCodes.Error;
+            }
         }
     }
 }

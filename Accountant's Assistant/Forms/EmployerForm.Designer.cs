@@ -33,8 +33,8 @@ namespace Accountant_s_Assistant.Forms
             this.btnClose = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
-            this.dtgEmployers = new System.Windows.Forms.DataGridView();
-            this.button2 = new System.Windows.Forms.Button();
+            this.dgvEmployers = new System.Windows.Forms.DataGridView();
+            this.btnClearFields = new System.Windows.Forms.Button();
             this.btnInsert = new System.Windows.Forms.Button();
             this.tbEmployerDirector = new System.Windows.Forms.TextBox();
             this.tbEmployerCity = new System.Windows.Forms.TextBox();
@@ -50,7 +50,7 @@ namespace Accountant_s_Assistant.Forms
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dtgEmployers)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvEmployers)).BeginInit();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -99,26 +99,34 @@ namespace Accountant_s_Assistant.Forms
             this.label7.TabIndex = 16;
             this.label7.Text = "Pregled unesenih poslodavaca";
             // 
-            // dtgEmployers
+            // dgvEmployers
             // 
-            this.dtgEmployers.BackgroundColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.dtgEmployers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dtgEmployers.Location = new System.Drawing.Point(36, 391);
-            this.dtgEmployers.Name = "dtgEmployers";
-            this.dtgEmployers.RowTemplate.Height = 25;
-            this.dtgEmployers.Size = new System.Drawing.Size(855, 188);
-            this.dtgEmployers.TabIndex = 15;
+            this.dgvEmployers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvEmployers.BackgroundColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.dgvEmployers.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvEmployers.MultiSelect = true;
+            this.dgvEmployers.ForeColor = System.Drawing.Color.Black;
+            this.dgvEmployers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvEmployers.Location = new System.Drawing.Point(36, 391);
+            this.dgvEmployers.Name = "dgvEmployers";
+            this.dgvEmployers.ReadOnly = true;
+            this.dgvEmployers.RowTemplate.Height = 25;
+            this.dgvEmployers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvEmployers.Size = new System.Drawing.Size(855, 188);
+            this.dgvEmployers.TabIndex = 15;
+            this.dgvEmployers.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEmployers_CellContentClick);
             // 
-            // button2
+            // btnClearFields
             // 
-            this.button2.FlatAppearance.BorderSize = 0;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Location = new System.Drawing.Point(784, 167);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(107, 57);
-            this.button2.TabIndex = 14;
-            this.button2.Text = "Očisti polja";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnClearFields.FlatAppearance.BorderSize = 0;
+            this.btnClearFields.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClearFields.Location = new System.Drawing.Point(784, 167);
+            this.btnClearFields.Name = "btnClearFields";
+            this.btnClearFields.Size = new System.Drawing.Size(107, 57);
+            this.btnClearFields.TabIndex = 14;
+            this.btnClearFields.Text = "Očisti polja";
+            this.btnClearFields.UseVisualStyleBackColor = true;
+            this.btnClearFields.Click += new System.EventHandler(this.btnClearFields_Click);
             // 
             // btnInsert
             // 
@@ -159,8 +167,8 @@ namespace Accountant_s_Assistant.Forms
             this.panel2.Controls.Add(this.tbEmployerStreet);
             this.panel2.Controls.Add(this.button3);
             this.panel2.Controls.Add(this.label7);
-            this.panel2.Controls.Add(this.dtgEmployers);
-            this.panel2.Controls.Add(this.button2);
+            this.panel2.Controls.Add(this.dgvEmployers);
+            this.panel2.Controls.Add(this.btnClearFields);
             this.panel2.Controls.Add(this.btnInsert);
             this.panel2.Controls.Add(this.tbEmployerDirector);
             this.panel2.Controls.Add(this.tbEmployerCity);
@@ -272,7 +280,7 @@ namespace Accountant_s_Assistant.Forms
             this.Text = "EmployerForm";
             this.Load += new System.EventHandler(this.EmployerForm_Load);
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dtgEmployers)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvEmployers)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.ResumeLayout(false);
@@ -295,8 +303,8 @@ namespace Accountant_s_Assistant.Forms
         private System.Windows.Forms.TextBox tbEmployerCity;
         private System.Windows.Forms.TextBox tbEmployerDirector;
         private System.Windows.Forms.Button btnInsert;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.DataGridView dtgEmployers;
+        private System.Windows.Forms.Button btnClearFields;
+        private System.Windows.Forms.DataGridView dgvEmployers;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Panel panel2;

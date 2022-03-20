@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
@@ -120,6 +121,15 @@ namespace Accountant_s_Assistant.App
             }
 
 
+        }
+
+        public static void killExcelProcesses()
+        {
+            int counter = 0;
+            foreach (Process clsProcess in Process.GetProcessesByName("excel"))
+            {
+                clsProcess.Kill();
+            }
         }
     }
 }

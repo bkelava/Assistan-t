@@ -16,8 +16,25 @@ namespace Accountant_s_Assistant.Database
             //empty
         }
 
-        private static void appendToJsonFile(string filename, string json)
+        private string TableName(string str)
         {
+            if (str == null)
+                return null;
+
+            if (str.Length > 1)
+                return char.ToUpper(str[0]) + str.Substring(1);
+
+            return str.ToUpper();
+        }
+
+        private static void appendToJsonFile(string filename, object list)
+        {
+            JArray array = JArray.FromObject(list);
+            JObject jObject = new JObject();
+            jObject["Employer"] = array;
+
+            string json = jObject.ToString();
+
             string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Database/" + filename);
             using (StreamWriter sw = new StreamWriter(path, false))
             {
@@ -63,12 +80,7 @@ namespace Accountant_s_Assistant.Database
             employer.Id = id.ToString();
             items.Add(employer);
 
-            JArray array = JArray.FromObject(items);
-            JObject jObject = new JObject();
-            jObject["Employer"] = array;
-
-            string json = jObject.ToString();
-            appendToJsonFile("employer.json", json);
+            appendToJsonFile("employer.json", items);
         }
 
         public static List<Employer> getAllEmployers()
@@ -100,6 +112,15 @@ namespace Accountant_s_Assistant.Database
                 list.Add(line);
             }
             return list;
+        }
+
+        public static void alterEmployer(Employer employer)
+        {
+            List<Employer> list = getAllEmployers();
+            var index = list.FindIndex(x => x.Id.Equals(employer.Id));
+            list[index] = employer;
+
+            //appendToJsonFile("Employers.json")
         }
     }
 }
