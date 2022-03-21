@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Accountant's Assistant": {
+      "commandName": "Project",
+      "nativeDebugging": false
+    }
+  }
+}

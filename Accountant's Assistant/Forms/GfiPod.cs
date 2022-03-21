@@ -15,7 +15,6 @@ namespace Accountant_s_Assistant.Forms
     public partial class GfiPod : Form
     {
         private string gfiPodPath;
-        PDFCreator pdfCreator;
         public GfiPod()
         {
             InitializeComponent();
@@ -26,6 +25,7 @@ namespace Accountant_s_Assistant.Forms
             gfiPodPath = "";
             btnRunCreator.Enabled = false;
             pbWorkDone.VisualMode = ProgressBarDisplayMode.CustomText;
+            pbWorkDone.ProgressColor = Color.Green;
         }
 
 
@@ -56,23 +56,63 @@ namespace Accountant_s_Assistant.Forms
             loadProgram();
         }
 
-        private void btnRunCreator_Click(object sender, EventArgs e)
+        private void performStep(string message, int step)
         {
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            pdfCreator = new PDFCreator(path);
+            pbWorkDone.CustomText = message;
+            pbWorkDone.Step = step;
+            pbWorkDone.PerformStep();
+        }
+
+        private void generateReports()
+        {
             pbWorkDone.CustomText = "Izrada izvješća u tijeku";
 
-            int returnCode = pdfCreator.generateGfiPodReport(gfiPodPath);
+
+            int returnCode = PDFCreator.generateGfiReport1(gfiPodPath);
+
             if (returnCode == ErrorCodes.NoError)
             {
-                pbWorkDone.CustomText = "Završeno";
-                MessageBox.Show("Izvješća u izrađena i nalaze se na lokaciji \n" + path, "Zavrešno", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                performStep("Završena izrada odluke o utvrđivanju fin. izv.", 33);
+                returnCode = PDFCreator.generateGfiReport2(gfiPodPath);
+                performStep("Izrada bilješki uz fin. izv.", 33);
+                if (returnCode == ErrorCodes.NoError)
+                {
+                    performStep("Završena izrada bilješki uz fin. izv.", 66);
+                    returnCode = PDFCreator.generateGfiReport3(gfiPodPath);
+                    performStep("Izrada odluke o pokriću dobiti i gubitka", 66);
+                    if (returnCode == ErrorCodes.NoError)
+                    {
+                        performStep("Završena izrada odluke o pokriću dobiti i gubitka", 100);
+                        //MessageBox.Show("Izvješća u izrađena i nalaze se na lokaciji \n" + path, "Zavrešno", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        performStep("Izrada izvješća je uspješna. Pronađite ih u mapi Dokumenti!", 100);
+                    }
+                    else
+                    {
+                        performStep("Greška prilikom izrade odluke o pokriću dobiti i gubitka", 66);
+                        messageBoxReportError();
+                    }
+                }
+                else
+                {
+                    performStep("Greška prilikom izrade bilješki uz fin. izv.", 33);
+                    messageBoxReportError();
+                }
             }
             else
             {
-                pbWorkDone.CustomText = "Greška prilikom izrade, ponovite postupak.";
-                MessageBox.Show("Nešto je pošlo po zlu.\nJedno ili više izvješća možda nije izrađeno!", "Greška prilikom izrade izvješća", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                performStep("Greška prilikom izrade\nodluke o utvrđivanju fin. izv.", 0);
+                messageBoxReportError();
             }
+        }
+
+        private void messageBoxReportError()
+        {
+            MessageBox.Show("Nešto je pošlo po zlu.\nJedno ili više izvješća možda nije izrađeno!", "Greška prilikom izrade izvješća", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void btnRunCreator_Click(object sender, EventArgs e)
+        {
+            generateReports();
         }
     }
 }

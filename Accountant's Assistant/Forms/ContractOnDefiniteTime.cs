@@ -273,10 +273,9 @@ namespace Accountant_s_Assistant.Forms
             List<KeyValuePair<string, string>> list = getContractFormData();
 
             string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            PDFCreator pdfCreator = new PDFCreator(path);
 
-            string pathToContract = pdfCreator.generateContractOnDefinitiveTime(list, employer, employee);
-            MessageBox.Show("Ugovor je spremljen u mapi Moji Dokumenti na Vašem računalu. \nPutanja: " + pathToContract, "Informacija", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            PDFCreator.generateContractOnDefinitiveTime(list, employer, employee);
+            MessageBox.Show("Ugovor je spremljen u mapi Moji Dokumenti na Vašem računalu.", "Informacija", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void cbWorkTime_SelectedIndexChanged(object sender, EventArgs e)

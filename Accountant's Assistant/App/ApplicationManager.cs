@@ -11,6 +11,10 @@ namespace Accountant_s_Assistant.App
         private static string path = "";
         private static string dir = "";
 
+        private ApplicationManager()
+        {
+            //empty
+        }
 
         public static void closeForm(Form form)
         {
@@ -125,7 +129,6 @@ namespace Accountant_s_Assistant.App
 
         public static void killExcelProcesses()
         {
-            int counter = 0;
             foreach (Process clsProcess in Process.GetProcessesByName("excel"))
             {
                 clsProcess.Kill();
