@@ -497,7 +497,88 @@ namespace Accountant_s_Assistant.App
 
         public static int generateGfiReport3(string gfiPodPath)
         {
-            return ErrorCodes.NoError;
+            ApplicationManager.killExcelProcesses();
+            List<KeyValuePair<string, string>> gfiInformation = initGfiInformation(gfiPodPath);
+
+            string tempfile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "tempfile.xlsx");
+            string template1 = Path.Combine(Directory.GetCurrentDirectory(), "../../../Resources/template_odluka_o_pokricu_gubitka.xlsx");
+            string template2 = Path.Combine(Directory.GetCurrentDirectory(), "../../../Resources/template_odluka_o_raspodjeli_dobiti.xlsx");
+
+            decimal totalExpensesLastYear = castDecimalFromString(findValueByKey(gfiInformation, "totalExpensesLastYear"));
+            decimal totalExpensesThisYear = castDecimalFromString(findValueByKey(gfiInformation, "totalExpensesThisYear"));
+            decimal diff = totalExpensesThisYear - totalExpensesLastYear;
+            decimal diffPercentage = (((totalExpensesThisYear - totalExpensesLastYear) / totalExpensesLastYear) * 100);
+            diffPercentage = Decimal.Round(diffPercentage, 2);
+
+            string reportInformation = "";
+
+            if (Decimal.Compare(totalExpensesThisYear, totalExpensesLastYear) == -1)
+            {
+                createFile(template1, tempfile);
+
+                Application excel = new Application();
+                Workbook wb = excel.Workbooks.Open(tempfile);
+                Worksheet sheet = (Worksheet)wb.ActiveSheet;
+
+                reportInformation = "" + findValueByKey(gfiInformation, "company") + "iz " + findValueByKey(gfiInformation, "city") + ", ul. " + findValueByKey(gfiInformation, "address") + ", donijela je " + createCroatianDate() + ". ovu";
+                excel.Cells["3", "A"].Value = reportInformation;
+
+                reportInformation = "Na glavnoj skupštini društva koja je održana " + createCroatianDate() + " donijela odluku o pokriću gubitka";
+                excel.Cells["9", "A"].Value = reportInformation;
+
+                reportInformation = "koji je nastao u 2021. u svoti od " + createDecimalString(Convert.ToDouble(diff)) + " iz ostvarenog dobitka 2020. godini.";
+                excel.Cells["10", "A"].Value = reportInformation;
+
+                excel.Cells["19", "F"].Value = findValueByKey(gfiInformation, "director").ToUpper();
+
+                string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "[ASISTENT] " + findValueByKey(gfiInformation, "company") + " ODLUKA O POKRIĆU GUBITKA.pdf");
+                wb.ExportAsFixedFormat(XlFixedFormatType.xlTypePDF, path);
+
+                //closing app
+                wb.Saved = true;
+                wb.Save();
+                wb.Close();
+                excel.Quit();
+
+                File.Delete(tempfile);
+                ApplicationManager.killExcelProcesses();
+                return ErrorCodes.NoError;
+            }
+            else
+            {
+                createFile(template1, tempfile);
+
+                Application excel = new Application();
+                Workbook wb = excel.Workbooks.Open(tempfile);
+                Worksheet sheet = (Worksheet)wb.ActiveSheet;
+
+                reportInformation = "" + findValueByKey(gfiInformation, "company") + "iz " + findValueByKey(gfiInformation, "city") + ", ul. " + findValueByKey(gfiInformation, "address") + ", donijela je " + createCroatianDate() + ". ovu";
+                excel.Cells["3", "A"].Value = reportInformation;
+
+                reportInformation = "1. Utvrđuje se ostvareni dobitak za 2021. u svoti od " + createDecimalString(Convert.ToDouble(diff)) + " kn.";
+                excel.Cells["9", "A"].Value = reportInformation;
+
+                reportInformation = "2.1. Za zakonske pričuve u visini 25 % od svote iz t. 1. ove Odluke, odnosno " + createDecimalString(Convert.ToDouble(diff)*0.25) + " kn.";
+                excel.Cells["11", "A"].Value = reportInformation;
+
+                reportInformation = "2.3. Zadržani dobitak u svoti od " + createDecimalString(Convert.ToDouble(diff) * 0.75) + " kn.";
+                excel.Cells["13", "A"].Value = reportInformation;
+
+                excel.Cells["23", "F"].Value = findValueByKey(gfiInformation, "director").ToUpper();
+
+                string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "[ASISTENT] " + findValueByKey(gfiInformation, "company") + " ODLUKA O RASPODIJELI DOBITI.pdf");
+                wb.ExportAsFixedFormat(XlFixedFormatType.xlTypePDF, path);
+
+                //closing app
+                wb.Saved = true;
+                wb.Save();
+                wb.Close();
+                excel.Quit();
+
+                File.Delete(tempfile);
+                ApplicationManager.killExcelProcesses();
+                return ErrorCodes.NoError;
+            }
         }
     }
 }
