@@ -33,6 +33,9 @@ namespace Accountant_s_Assistant.Forms
         {
             this.btnLoadGfiPod = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnValidate = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tbLossInformation = new System.Windows.Forms.TextBox();
             this.pbWorkDone = new Accountant_s_Assistant.Resources.TextProgressBar();
             this.btnRunCreator = new System.Windows.Forms.Button();
             this.btnCloseProgram = new System.Windows.Forms.Button();
@@ -47,7 +50,7 @@ namespace Accountant_s_Assistant.Forms
             this.btnLoadGfiPod.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLoadGfiPod.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnLoadGfiPod.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnLoadGfiPod.Location = new System.Drawing.Point(222, 68);
+            this.btnLoadGfiPod.Location = new System.Drawing.Point(138, 68);
             this.btnLoadGfiPod.Name = "btnLoadGfiPod";
             this.btnLoadGfiPod.Size = new System.Drawing.Size(149, 70);
             this.btnLoadGfiPod.TabIndex = 1;
@@ -57,6 +60,9 @@ namespace Accountant_s_Assistant.Forms
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnValidate);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.tbLossInformation);
             this.panel1.Controls.Add(this.pbWorkDone);
             this.panel1.Controls.Add(this.btnRunCreator);
             this.panel1.Controls.Add(this.btnLoadGfiPod);
@@ -66,10 +72,42 @@ namespace Accountant_s_Assistant.Forms
             this.panel1.Size = new System.Drawing.Size(800, 406);
             this.panel1.TabIndex = 3;
             // 
+            // btnValidate
+            // 
+            this.btnValidate.FlatAppearance.BorderSize = 0;
+            this.btnValidate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnValidate.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnValidate.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnValidate.Location = new System.Drawing.Point(318, 68);
+            this.btnValidate.Name = "btnValidate";
+            this.btnValidate.Size = new System.Drawing.Size(149, 70);
+            this.btnValidate.TabIndex = 7;
+            this.btnValidate.Text = "Validacija\r\nunosa";
+            this.btnValidate.UseVisualStyleBackColor = true;
+            this.btnValidate.Click += new System.EventHandler(this.btnValidate_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.label1.Location = new System.Drawing.Point(194, 199);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(413, 15);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "(Ukoliko je poduzeće u gubitku, molim da se unese način pokrivanja gubitka)";
+            // 
+            // tbLossInformation
+            // 
+            this.tbLossInformation.Location = new System.Drawing.Point(138, 173);
+            this.tbLossInformation.Name = "tbLossInformation";
+            this.tbLossInformation.Size = new System.Drawing.Size(514, 23);
+            this.tbLossInformation.TabIndex = 5;
+            this.tbLossInformation.TextChanged += new System.EventHandler(this.tbLossInformation_TextChanged);
+            // 
             // pbWorkDone
             // 
             this.pbWorkDone.CustomText = "";
-            this.pbWorkDone.Location = new System.Drawing.Point(138, 170);
+            this.pbWorkDone.Location = new System.Drawing.Point(138, 236);
             this.pbWorkDone.Name = "pbWorkDone";
             this.pbWorkDone.ProgressColor = System.Drawing.Color.LightGreen;
             this.pbWorkDone.Size = new System.Drawing.Size(514, 35);
@@ -80,11 +118,12 @@ namespace Accountant_s_Assistant.Forms
             // 
             // btnRunCreator
             // 
+            this.btnRunCreator.Enabled = false;
             this.btnRunCreator.FlatAppearance.BorderSize = 0;
             this.btnRunCreator.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRunCreator.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnRunCreator.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnRunCreator.Location = new System.Drawing.Point(452, 68);
+            this.btnRunCreator.Location = new System.Drawing.Point(503, 68);
             this.btnRunCreator.Name = "btnRunCreator";
             this.btnRunCreator.Size = new System.Drawing.Size(149, 70);
             this.btnRunCreator.TabIndex = 3;
@@ -125,6 +164,7 @@ namespace Accountant_s_Assistant.Forms
             this.Text = "GfiPod";
             this.Load += new System.EventHandler(this.GfiPod_Load);
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -137,6 +177,8 @@ namespace Accountant_s_Assistant.Forms
         private System.Windows.Forms.Button btnCloseProgram;
         private System.Windows.Forms.OpenFileDialog fileDialog;
         private System.Windows.Forms.ColorDialog colorDialog1;
-        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Button btnValidate;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox tbLossInformation;
     }
 }

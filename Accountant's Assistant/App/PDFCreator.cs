@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Microsoft.Office.Interop.Excel;
 using System.IO;
 using System.Globalization;
+using Accountant_s_Assistant.Forms;
 
 namespace Accountant_s_Assistant.App
 {
@@ -52,7 +53,7 @@ namespace Accountant_s_Assistant.App
             return returnValue;
         }
 
-        private static List<KeyValuePair<string, string>> initGfiInformation(string path)
+        public static List<KeyValuePair<string, string>> initGfiInformation(string path)
         {
             ApplicationManager.killExcelProcesses();
 
@@ -102,9 +103,11 @@ namespace Accountant_s_Assistant.App
                 gfiInformation.Add(new KeyValuePair<string, string>("otherFinancialIncome", createDecimalString(sheet.Cells["47", "J"].Value)));
                 gfiInformation.Add(new KeyValuePair<string, string>("totalExpensesThisYear", createDecimalString(sheet.Cells["61", "J"].Value)));
                 gfiInformation.Add(new KeyValuePair<string, string>("totalExpensesLastYear", createDecimalString(sheet.Cells["61", "I"].Value)));
-                gfiInformation.Add(new KeyValuePair<string, string>("gain", createDecimalString(sheet.Cells["67", "J"].Value)));
-                gfiInformation.Add(new KeyValuePair<string, string>("loss", createDecimalString(sheet.Cells["68", "J"].Value)));
-                gfiInformation.Add(new KeyValuePair<string, string>("gain", createDecimalString(sheet.Cells["67", "J"].Value)));
+                gfiInformation.Add(new KeyValuePair<string, string>("lossOrGainTotal", createDecimalString(sheet.Cells["66", "J"].Value)));
+                gfiInformation.Add(new KeyValuePair<string, string>("lossOrGainTax", createDecimalString(sheet.Cells["65", "J"].Value)));
+                gfiInformation.Add(new KeyValuePair<string, string>("lossOrGainWithoutTax", createDecimalString(sheet.Cells["62", "J"].Value)));
+                gfiInformation.Add(new KeyValuePair<string, string>("gain", createDecimalString(sheet.Cells["63", "J"].Value)));
+                gfiInformation.Add(new KeyValuePair<string, string>("loss", createDecimalString(sheet.Cells["64", "J"].Value)));
 
                 sheet = (Worksheet)wb.Worksheets["Bilanca"];
 
@@ -125,7 +128,7 @@ namespace Accountant_s_Assistant.App
 
         private static List<KeyValuePair<string, string>> initNKD()
         {
-            string path = Path.Combine(Directory.GetCurrentDirectory(), "../../../Resources/NKD.csv");
+            string path = string.Format("{0}\\Resources\\NKD.csv", Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"")));
             var lines = File.ReadAllLines(path);
 
             List<KeyValuePair<string, string>> nkd = new List<KeyValuePair<string, string>>();
@@ -202,44 +205,41 @@ namespace Accountant_s_Assistant.App
 
         public static void generateContractOnDefinitiveTime(List<KeyValuePair<string, string>> list, Employer employer, Employee employee)
         {
-            /*ApplicationManager.killExcelProcesses();
+            ApplicationManager.killExcelProcesses();
 
-            string path = Path.Combine(Directory.GetCurrentDirectory(), "../../../Resources/template.xlsx");
-            string pathToTempFile = Path.Combine(this.path, "tempfile.xlsx");
-            try
-            {
-                File.WriteAllBytes(pathToTempFile, File.ReadAllBytes(path));
-            }
-            catch(Exception e)
-            {
-                EventLog.WriteEntry(e.ToString(), "ERROR");
-            }
-            
+            string tempfile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "tempfile.xlsx");
+            string template = string.Format("{0}Resources\\template_contract_on_definitve_time.xlsx", Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"")));
+
+            createFile(template, tempfile);
+
             Application excel = new Application();
-            Workbook wb = excel.Workbooks.Open(pathToTempFile);
-            Worksheet excelSheet = (Worksheet)wb.ActiveSheet;
+            Workbook wb = excel.Workbooks.Open(tempfile);
+            Worksheet sheet = (Worksheet)wb.ActiveSheet;
 
             //Read the first cell
-            excelSheet.Cells["1", "C"].Value = employer.Name + " ," + employer.Address.Street + " " + employer.Address.PostalCode + " " + employer.Address.City + ", OIB: " + employer.VAT;
-            excelSheet.Cells["2", "C"].Value = employer.Director;
-            excelSheet.Cells["2", "H"].Value = employee.Name + ", OIB: " + employee.VAT;
-            excelSheet.Cells["3", "E"].Value = list.Find(x => x.Key == "contractDate").Value;
-            excelSheet.Cells["8", "F"].Value = list.Find(x => x.Key == "endOfEmployment").Value;
-            excelSheet.Cells["9", "A"].Value = list.Find(x => x.Key == "jobDescription").Value;
-            excelSheet.Cells["10", "F"].Value = list.Find(x => x.Key == "trialWorkDuration").Value;
-            excelSheet.Cells["11", "C"].Value = list.Find(x => x.Key == "employeeWorkPlace").Value;
-            excelSheet.Cells["14", "C"].Value = list.Find(x => x.Key == "startOfEmployment").Value;
-            excelSheet.Cells["14", "E"].Value = list.Find(x => x.Key == "startOfEmploymentDescription").Value;
-            excelSheet.Cells["17", "H"].Value = list.Find(x => x.Key == "sallary").Value;
-            excelSheet.Cells["19", "I"].Value = list.Find(x => x.Key == "stimulation").Value;
-            excelSheet.Cells["21", "H"].Value = list.Find(x => x.Key == "sallaryFitA").Value;
-            excelSheet.Cells["22", "H"].Value = list.Find(x => x.Key == "sallaryFitB").Value;
-            excelSheet.Cells["23", "H"].Value = list.Find(x => x.Key == "sallaryFitC").Value;
-            excelSheet.Cells["24", "H"].Value = list.Find(x => x.Key == "sallaryFitD").Value;
-            excelSheet.Cells["25", "H"].Value = list.Find(x => x.Key == "sallaryFitE").Value;
-            excelSheet.Cells["26", "H"].Value = list.Find(x => x.Key == "sallaryFitF").Value;
-            excelSheet.Cells["32", "C"].Value = list.Find(x => x.Key == "workTimeHalfOrFull").Value;
-            excelSheet.Cells["32", "F"].Value = list.Find(x => x.Key == "workHoursPerWeek").Value;
+            sheet.Cells["1", "C"].Value = employer.Name + " ," + employer.Address.Street + " " + employer.Address.PostalCode + " " + employer.Address.City + ", OIB: " + employer.VAT;
+            sheet.Cells["2", "C"].Value = employer.Director;
+            sheet.Cells["2", "H"].Value = employee.Name + ", OIB: " + employee.VAT;
+            sheet.Cells["3", "E"].Value = list.Find(x => x.Key == "contractDate").Value;
+            sheet.Cells["8", "F"].Value = list.Find(x => x.Key == "endOfEmployment").Value;
+            sheet.Cells["9", "A"].Value = list.Find(x => x.Key == "jobDescription").Value;
+            sheet.Cells["10", "F"].Value = list.Find(x => x.Key == "trialWorkDuration").Value;
+            sheet.Cells["11", "C"].Value = list.Find(x => x.Key == "employeeWorkPlace").Value;
+            sheet.Cells["14", "C"].Value = list.Find(x => x.Key == "startOfEmployment").Value;
+            sheet.Cells["14", "E"].Value = list.Find(x => x.Key == "startOfEmploymentDescription").Value;
+
+            string sallary = createDecimalString(Convert.ToDouble(list.Find(x => x.Key == "sallary").Value));
+            sheet.Cells["17", "H"].Value = sallary;
+
+            sheet.Cells["19", "I"].Value = list.Find(x => x.Key == "stimulation").Value;
+            sheet.Cells["21", "H"].Value = list.Find(x => x.Key == "sallaryFitA").Value;
+            sheet.Cells["22", "H"].Value = list.Find(x => x.Key == "sallaryFitB").Value;
+            sheet.Cells["23", "H"].Value = list.Find(x => x.Key == "sallaryFitC").Value;
+            sheet.Cells["24", "H"].Value = list.Find(x => x.Key == "sallaryFitD").Value;
+            sheet.Cells["25", "H"].Value = list.Find(x => x.Key == "sallaryFitE").Value;
+            sheet.Cells["26", "H"].Value = list.Find(x => x.Key == "sallaryFitF").Value;
+            sheet.Cells["32", "C"].Value = list.Find(x => x.Key == "workTimeHalfOrFull").Value;
+            sheet.Cells["32", "F"].Value = list.Find(x => x.Key == "workHoursPerWeek").Value;
 
             string workTime = list.Find(x => x.Key == "workTime").Value;
             string workTimeStartA = list.Find(x => x.Key == "workTimeStartA").Value;
@@ -248,39 +248,39 @@ namespace Accountant_s_Assistant.App
             {
                 string workTimeEndA = list.Find(x => x.Key == "workTimeEndA").Value;
                 string workTimeStartB = list.Find(x => x.Key == "workTimeStartB").Value;
-                excelSheet.Cells["33", "F"].Value = "od " + workTimeStartA + " do " + workTimeEndA + ", a zavšrava od " + workTimeStartA + " do " + workTimeEndB + "."; 
+                sheet.Cells["33", "F"].Value = "od " + workTimeStartA + " do " + workTimeEndA + ", a zavšrava od " + workTimeStartA + " do " + workTimeEndB + "."; 
             }
             else if (workTime.Equals("dvokratno"))
             {
                 string workTimeEndA = list.Find(x => x.Key == "workTimeEndA").Value;
                 string workTimeStartB = list.Find(x => x.Key == "workTimeStartB").Value;
-                excelSheet.Cells["33", "F"].Value = "od " + workTimeStartA + " i završava u" + workTimeEndA + ", te počinje u" + workTimeStartA + " i zavšrava do " + workTimeEndB + ".";
+                sheet.Cells["33", "F"].Value = "od " + workTimeStartA + " i završava u" + workTimeEndA + ", te počinje u" + workTimeStartA + " i zavšrava do " + workTimeEndB + ".";
             }
             else
             {
-                excelSheet.Cells["33", "F"].Value = "od " + workTimeStartA + " i završava u " + workTimeEndB + ".";
+                sheet.Cells["33", "F"].Value = "od " + workTimeStartA + " i završava u " + workTimeEndB + ".";
 
             }
-            excelSheet.Cells["35", "D"].Value = list.Find(x => x.Key == "weeklyTimeOff").Value;
-            excelSheet.Cells["36", "E"].Value = list.Find(x => x.Key == "vacation").Value;
-            excelSheet.Cells["36", "F"].Value = list.Find(x => x.Key == "vacationDescription").Value;
-            excelSheet.Cells["43", "C"].Value = list.Find(x => x.Key == "contractCancelation").Value;
-            excelSheet.Cells["45", "F"].Value = list.Find(x => x.Key == "noticePeriodA").Value;
-            excelSheet.Cells["46", "C"].Value = list.Find(x => x.Key == "noticePeriodB").Value;
+            sheet.Cells["35", "D"].Value = list.Find(x => x.Key == "weeklyTimeOff").Value;
+            sheet.Cells["36", "E"].Value = list.Find(x => x.Key == "vacation").Value;
+            sheet.Cells["36", "F"].Value = list.Find(x => x.Key == "vacationDescription").Value;
+            sheet.Cells["43", "C"].Value = list.Find(x => x.Key == "contractCancelation").Value;
+            sheet.Cells["45", "F"].Value = list.Find(x => x.Key == "noticePeriodA").Value;
+            sheet.Cells["46", "C"].Value = list.Find(x => x.Key == "noticePeriodB").Value;
 
             string rightsAndObligations = list.Find(x => x.Key == "rightsAndObligations").Value;
             rightsAndObligations = splitToLines(rightsAndObligations, 128);
-            excelSheet.Cells["49", "A"].Value = rightsAndObligations;
-            excelSheet.Cells["50", "A"].Value = "";
+            sheet.Cells["49", "A"].Value = rightsAndObligations;
+            sheet.Cells["50", "A"].Value = "";
 
-            excelSheet.Cells["53", "G"].Value = list.Find(x => x.Key == "competentCourt").Value;
-            excelSheet.Cells["54", "D"].Value = list.Find(x => x.Key == "contractEntry").Value;
-            excelSheet.Cells["54", "F"].Value = list.Find(x => x.Key == "contractEntryComment").Value;
+            sheet.Cells["53", "G"].Value = list.Find(x => x.Key == "competentCourt").Value;
+            sheet.Cells["54", "D"].Value = list.Find(x => x.Key == "contractEntry").Value;
+            sheet.Cells["54", "F"].Value = list.Find(x => x.Key == "contractEntryComment").Value;
 
-            excelSheet.Cells["58", "I"].Value = employer.Director;
-            excelSheet.Cells["58", "B"].Value = employee.Name;
+            sheet.Cells["58", "I"].Value = employer.Director;
+            sheet.Cells["58", "B"].Value = employee.Name;
 
-            path = Path.Combine(this.path, "[ASISTENT] " + employee.Name + " " + employer.Name + ".pdf");
+            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "[ASISTENT] " + employee.Name + " " + employer.Name + ".pdf");
             wb.ExportAsFixedFormat(XlFixedFormatType.xlTypePDF, path);
 
             //closing app
@@ -288,9 +288,98 @@ namespace Accountant_s_Assistant.App
             wb.Save();
             wb.Close();
             excel.Quit();
-            File.Delete(pathToTempFile);
 
-            ApplicationManager.killExcelProcesses();*/
+            File.Delete(tempfile);
+            ApplicationManager.killExcelProcesses();
+        }
+
+        public static void generateContractOnIndefinitiveTime(List<KeyValuePair<string, string>> list, Employer employer, Employee employee)
+        {
+            ApplicationManager.killExcelProcesses();
+
+            string tempfile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "tempfile.xlsx");
+            string template = string.Format("{0}Resources\\template_contract_on_indefinitve_time.xlsx", Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"")));
+
+            createFile(template, tempfile);
+
+            Application excel = new Application();
+            Workbook wb = excel.Workbooks.Open(tempfile);
+            Worksheet sheet = (Worksheet)wb.ActiveSheet;
+
+            //Read the first cell
+            sheet.Cells["1", "C"].Value = employer.Name + " ," + employer.Address.Street + " " + employer.Address.PostalCode + " " + employer.Address.City + ", OIB: " + employer.VAT;
+            sheet.Cells["2", "C"].Value = employer.Director;
+            sheet.Cells["2", "H"].Value = employee.Name + ", OIB: " + employee.VAT;
+            sheet.Cells["3", "E"].Value = list.Find(x => x.Key == "contractDate").Value;
+            sheet.Cells["9", "A"].Value = list.Find(x => x.Key == "jobDescription").Value;
+            sheet.Cells["10", "F"].Value = list.Find(x => x.Key == "trialWorkDuration").Value;
+            sheet.Cells["11", "C"].Value = list.Find(x => x.Key == "employeeWorkPlace").Value;
+            sheet.Cells["14", "C"].Value = list.Find(x => x.Key == "startOfEmployment").Value;
+            sheet.Cells["14", "E"].Value = list.Find(x => x.Key == "startOfEmploymentDescription").Value;
+
+            string sallary = createDecimalString(Convert.ToDouble(list.Find(x => x.Key == "sallary").Value));
+            sheet.Cells["17", "H"].Value = sallary;
+
+            sheet.Cells["19", "I"].Value = list.Find(x => x.Key == "stimulation").Value;
+            sheet.Cells["21", "H"].Value = list.Find(x => x.Key == "sallaryFitA").Value;
+            sheet.Cells["22", "H"].Value = list.Find(x => x.Key == "sallaryFitB").Value;
+            sheet.Cells["23", "H"].Value = list.Find(x => x.Key == "sallaryFitC").Value;
+            sheet.Cells["24", "H"].Value = list.Find(x => x.Key == "sallaryFitD").Value;
+            sheet.Cells["25", "H"].Value = list.Find(x => x.Key == "sallaryFitE").Value;
+            sheet.Cells["26", "H"].Value = list.Find(x => x.Key == "sallaryFitF").Value;
+            sheet.Cells["32", "C"].Value = list.Find(x => x.Key == "workTimeHalfOrFull").Value;
+            sheet.Cells["32", "F"].Value = list.Find(x => x.Key == "workHoursPerWeek").Value;
+
+            string workTime = list.Find(x => x.Key == "workTime").Value;
+            string workTimeStartA = list.Find(x => x.Key == "workTimeStartA").Value;
+            string workTimeEndB = list.Find(x => x.Key == "workTimeEndB").Value;
+            if (workTime.Equals("klizno"))
+            {
+                string workTimeEndA = list.Find(x => x.Key == "workTimeEndA").Value;
+                string workTimeStartB = list.Find(x => x.Key == "workTimeStartB").Value;
+                sheet.Cells["33", "F"].Value = "od " + workTimeStartA + " do " + workTimeEndA + ", a zavšrava od " + workTimeStartA + " do " + workTimeEndB + ".";
+            }
+            else if (workTime.Equals("dvokratno"))
+            {
+                string workTimeEndA = list.Find(x => x.Key == "workTimeEndA").Value;
+                string workTimeStartB = list.Find(x => x.Key == "workTimeStartB").Value;
+                sheet.Cells["33", "F"].Value = "od " + workTimeStartA + " i završava u" + workTimeEndA + ", te počinje u" + workTimeStartA + " i zavšrava do " + workTimeEndB + ".";
+            }
+            else
+            {
+                sheet.Cells["33", "F"].Value = "od " + workTimeStartA + " i završava u " + workTimeEndB + ".";
+
+            }
+            sheet.Cells["35", "D"].Value = list.Find(x => x.Key == "weeklyTimeOff").Value;
+            sheet.Cells["36", "E"].Value = list.Find(x => x.Key == "vacation").Value;
+            sheet.Cells["36", "F"].Value = list.Find(x => x.Key == "vacationDescription").Value;
+            sheet.Cells["43", "C"].Value = list.Find(x => x.Key == "contractCancelation").Value;
+            sheet.Cells["45", "F"].Value = list.Find(x => x.Key == "noticePeriodA").Value;
+            sheet.Cells["46", "C"].Value = list.Find(x => x.Key == "noticePeriodB").Value;
+
+            string rightsAndObligations = list.Find(x => x.Key == "rightsAndObligations").Value;
+            rightsAndObligations = splitToLines(rightsAndObligations, 128);
+            sheet.Cells["49", "A"].Value = rightsAndObligations;
+            sheet.Cells["50", "A"].Value = "";
+
+            sheet.Cells["53", "G"].Value = list.Find(x => x.Key == "competentCourt").Value;
+            sheet.Cells["54", "D"].Value = list.Find(x => x.Key == "contractEntry").Value;
+            sheet.Cells["54", "F"].Value = list.Find(x => x.Key == "contractEntryComment").Value;
+
+            sheet.Cells["58", "I"].Value = employer.Director;
+            sheet.Cells["58", "B"].Value = employee.Name;
+
+            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "[ASISTENT] " + employee.Name + " " + employer.Name + ".pdf");
+            wb.ExportAsFixedFormat(XlFixedFormatType.xlTypePDF, path);
+
+            //closing app
+            wb.Saved = true;
+            wb.Save();
+            wb.Close();
+            excel.Quit();
+
+            File.Delete(tempfile);
+            ApplicationManager.killExcelProcesses();
         }
 
         private static void createFile(string template, string tempfile)
@@ -329,14 +418,12 @@ namespace Accountant_s_Assistant.App
             return value;
         }
 
-        public static int generateGfiReport1(string gfiPodPath)
+        public static int generateGfiReport1(List<KeyValuePair<string, string>> gfiInformation)
         {
             ApplicationManager.killExcelProcesses();
-            List<KeyValuePair<string, string>> gfiInformation = initGfiInformation(gfiPodPath);
 
             string tempfile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "tempfile.xlsx");
-            string template = Path.Combine(Directory.GetCurrentDirectory(), "../../../Resources/template_odluka.xlsx");
-
+            string template = string.Format("{0}Resources\\template_odluka.xlsx", Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"")));
             createFile(template, tempfile);
 
             Application excel = new Application();
@@ -351,7 +438,7 @@ namespace Accountant_s_Assistant.App
 
             sheet.Cells["32", "F"].Value = findValueByKey(gfiInformation, "director");
 
-            reportInformation = "oporezivanja u svoti od " + findValueByKey(gfiInformation, "gain") + " kn (odnosno gubitaka u svoti od " + findValueByKey(gfiInformation, "loss") + " kn).";
+            reportInformation = "oporezivanja u svoti od +" + findValueByKey(gfiInformation, "gain") + " kn (odnosno gubitaka u svoti od -" + findValueByKey(gfiInformation, "loss") + " kn).";
             sheet.Cells["22", "A"].Value = reportInformation;
 
             string curranteDate = createCroatianDate();
@@ -376,13 +463,12 @@ namespace Accountant_s_Assistant.App
 
         }
 
-        public static int generateGfiReport2(string gfiPodPath)
+        public static int generateGfiReport2(List<KeyValuePair<string, string>> gfiInformation)
         {
             ApplicationManager.killExcelProcesses();
-            List<KeyValuePair<string, string>> gfiInformation = initGfiInformation(gfiPodPath);
 
             string tempfile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "tempfile.xlsx");
-            string template = Path.Combine(Directory.GetCurrentDirectory(), "../../../Resources/template_biljeske.xlsx");
+            string template = string.Format("{0}Resources\\template_biljeske.xlsx", Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"")));
 
             createFile(template, tempfile);
 
@@ -467,15 +553,23 @@ namespace Accountant_s_Assistant.App
             decimal totalExpensesLastYear = castDecimalFromString(findValueByKey(gfiInformation, "totalExpensesLastYear"));
             decimal totalExpensesThisYear = castDecimalFromString(findValueByKey(gfiInformation, "totalExpensesThisYear"));
             decimal diff = totalExpensesThisYear - totalExpensesLastYear;
-            decimal diffPercentage = (((totalExpensesThisYear - totalExpensesLastYear) / totalExpensesLastYear) * 100);
-            diffPercentage = Decimal.Round(diffPercentage, 2);
-            if (Decimal.Compare(totalExpensesThisYear, totalExpensesLastYear) == -1)
+
+            if (Decimal.Compare(totalExpensesLastYear, Decimal.Zero) == 0)
             {
-                reportInformation = "" + diffPercentage.ToString() + "%, odnosno zabilježena je promjena u apsolutnom iznosu od " + createDecimalString(Convert.ToDouble(diff)) + " kn.";
+                reportInformation = "-100%, odnosno zabilježena je promjena u apsolutnom iznosu od -" + createDecimalString(Convert.ToDouble(diff)) + " kn.";
             }
             else
             {
-                reportInformation = "+" + diffPercentage.ToString() + "%, odnosno zabilježena je promjena u apsolutnom iznosu od +" + createDecimalString(Convert.ToDouble(diff)) + " kn.";
+                decimal diffPercentage = (((totalExpensesThisYear - totalExpensesLastYear) / totalExpensesLastYear) * 100);
+                diffPercentage = Decimal.Round(diffPercentage, 2);
+                if (Decimal.Compare(totalExpensesThisYear, totalExpensesLastYear) == -1)
+                {
+                    reportInformation = "" + diffPercentage.ToString() + "%, odnosno zabilježena je promjena u apsolutnom iznosu od " + createDecimalString(Convert.ToDouble(diff)) + " kn.";
+                }
+                else
+                {
+                    reportInformation = "+" + diffPercentage.ToString() + "%, odnosno zabilježena je promjena u apsolutnom iznosu od +" + createDecimalString(Convert.ToDouble(diff)) + " kn.";
+                }
             }
             excel.Cells["134", "A"].Value = reportInformation;
 
@@ -495,24 +589,29 @@ namespace Accountant_s_Assistant.App
             return ErrorCodes.NoError;
         }
 
-        public static int generateGfiReport3(string gfiPodPath)
+        public static int calculateExpensesDiff(List<KeyValuePair<string, string>> gfiInformation)
         {
-            ApplicationManager.killExcelProcesses();
-            List<KeyValuePair<string, string>> gfiInformation = initGfiInformation(gfiPodPath);
-
-            string tempfile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "tempfile.xlsx");
-            string template1 = Path.Combine(Directory.GetCurrentDirectory(), "../../../Resources/template_odluka_o_pokricu_gubitka.xlsx");
-            string template2 = Path.Combine(Directory.GetCurrentDirectory(), "../../../Resources/template_odluka_o_raspodjeli_dobiti.xlsx");
-
             decimal totalExpensesLastYear = castDecimalFromString(findValueByKey(gfiInformation, "totalExpensesLastYear"));
             decimal totalExpensesThisYear = castDecimalFromString(findValueByKey(gfiInformation, "totalExpensesThisYear"));
-            decimal diff = totalExpensesThisYear - totalExpensesLastYear;
-            decimal diffPercentage = (((totalExpensesThisYear - totalExpensesLastYear) / totalExpensesLastYear) * 100);
-            diffPercentage = Decimal.Round(diffPercentage, 2);
+            int returnValue = Decimal.Compare(totalExpensesThisYear, totalExpensesLastYear);
+            return returnValue;
+        }
+
+        public static int generateGfiReport3(List<KeyValuePair<string, string>> gfiInformation, string information)
+        {
+            ApplicationManager.killExcelProcesses();
+
+            string tempfile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "tempfile.xlsx");
+            string template1 = string.Format("{0}Resources\\template_odluka_o_pokricu_gubitka.xlsx", Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"")));
+            string template2 = string.Format("{0}Resources\\template_odluka_o_raspodjeli_dobiti_jdoo.xlsx", Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"")));
+            string template3 = string.Format("{0}Resources\\template_odluka_o_raspodjeli_dobiti_doo.xlsx", Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"")));
+
+            double choice = Convert.ToDouble(gfiInformation.Find(x => x.Key == "lossOrGainWithoutTax").Value);
+            string company = findValueByKey(gfiInformation, "company");
 
             string reportInformation = "";
 
-            if (Decimal.Compare(totalExpensesThisYear, totalExpensesLastYear) == -1)
+            if (choice < 0)
             {
                 createFile(template1, tempfile);
 
@@ -526,10 +625,10 @@ namespace Accountant_s_Assistant.App
                 reportInformation = "Na glavnoj skupštini društva koja je održana " + createCroatianDate() + " donijela odluku o pokriću gubitka";
                 excel.Cells["9", "A"].Value = reportInformation;
 
-                reportInformation = "koji je nastao u 2021. u svoti od " + createDecimalString(Convert.ToDouble(diff)) + " iz ostvarenog dobitka 2020. godini.";
+                reportInformation = "koji je nastao u 2021. u svoti od " + findValueByKey(gfiInformation, "loss") + ", " + information.ToLower() + ".";
                 excel.Cells["10", "A"].Value = reportInformation;
 
-                excel.Cells["19", "F"].Value = findValueByKey(gfiInformation, "director").ToUpper();
+                excel.Cells["19", "F"].Value = findValueByKey(gfiInformation, "director").ToUpper(); 
 
                 string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "[ASISTENT] " + findValueByKey(gfiInformation, "company") + " ODLUKA O POKRIĆU GUBITKA.pdf");
                 wb.ExportAsFixedFormat(XlFixedFormatType.xlTypePDF, path);
@@ -545,37 +644,80 @@ namespace Accountant_s_Assistant.App
                 return ErrorCodes.NoError;
             }
             else
-            {
-                createFile(template1, tempfile);
+            {        
+                if (company.Contains("j.d.o.o."))
+                {
+                    createFile(template3, tempfile);
 
-                Application excel = new Application();
-                Workbook wb = excel.Workbooks.Open(tempfile);
-                Worksheet sheet = (Worksheet)wb.ActiveSheet;
+                    Application excel = new Application();
+                    Workbook wb = excel.Workbooks.Open(tempfile);
+                    Worksheet sheet = (Worksheet)wb.ActiveSheet;
 
-                reportInformation = "" + findValueByKey(gfiInformation, "company") + "iz " + findValueByKey(gfiInformation, "city") + ", ul. " + findValueByKey(gfiInformation, "address") + ", donijela je " + createCroatianDate() + ". ovu";
-                excel.Cells["3", "A"].Value = reportInformation;
+                    reportInformation = "" + findValueByKey(gfiInformation, "company") + "iz " + findValueByKey(gfiInformation, "city") + ", ul. " + findValueByKey(gfiInformation, "address") + ", donijela je " + createCroatianDate() + ". ovu";
+                    excel.Cells["3", "A"].Value = reportInformation;
 
-                reportInformation = "1. Utvrđuje se ostvareni dobitak za 2021. u svoti od " + createDecimalString(Convert.ToDouble(diff)) + " kn.";
-                excel.Cells["9", "A"].Value = reportInformation;
+                    reportInformation = "1. Utvrđuje se ostvareni dobitak za 2021. u svoti od " +  findValueByKey(gfiInformation, "lossOrGainWithoutTax") + " kn.";
+                    excel.Cells["9", "A"].Value = reportInformation;
 
-                reportInformation = "2.1. Za zakonske pričuve u visini 25 % od svote iz t. 1. ove Odluke, odnosno " + createDecimalString(Convert.ToDouble(diff)*0.25) + " kn.";
-                excel.Cells["11", "A"].Value = reportInformation;
+                    reportInformation = "1.1. Utvrđuje se porez na dobit u svoti od " + findValueByKey(gfiInformation, "lossOrGainTax") + " kn.";
+                    excel.Cells["10", "A"].Value = reportInformation;
 
-                reportInformation = "2.3. Zadržani dobitak u svoti od " + createDecimalString(Convert.ToDouble(diff) * 0.75) + " kn.";
-                excel.Cells["13", "A"].Value = reportInformation;
+                    reportInformation = "1.2. Utvrđuje se dobit umanjena za porez na dobit u svoti od " + findValueByKey(gfiInformation, "lossOrGainTotal") +" kn.";
+                    excel.Cells["11", "A"].Value = reportInformation;
 
-                excel.Cells["23", "F"].Value = findValueByKey(gfiInformation, "director").ToUpper();
+                    reportInformation = "2.1. Za zakonske pričuve u visini 25 % od svote iz t. 1. ove Odluke, odnosno " + createDecimalString(Convert.ToDouble(findValueByKey(gfiInformation, "lossOrGainTotal")) * 0.25) + " kn.";
+                    excel.Cells["13", "A"].Value = reportInformation;
 
-                string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "[ASISTENT] " + findValueByKey(gfiInformation, "company") + " ODLUKA O RASPODIJELI DOBITI.pdf");
-                wb.ExportAsFixedFormat(XlFixedFormatType.xlTypePDF, path);
+                    reportInformation = "2.3. Zadržani dobitak u svoti od " + createDecimalString(Convert.ToDouble(findValueByKey(gfiInformation, "lossOrGainTotal")) * 0.75) + " kn.";
+                    excel.Cells["15", "A"].Value = reportInformation;
 
-                //closing app
-                wb.Saved = true;
-                wb.Save();
-                wb.Close();
-                excel.Quit();
+                    excel.Cells["25", "F"].Value = findValueByKey(gfiInformation, "director").ToUpper();
 
-                File.Delete(tempfile);
+                    string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "[ASISTENT] " + findValueByKey(gfiInformation, "company") + " ODLUKA O RASPODIJELI DOBITI.pdf");
+                    wb.ExportAsFixedFormat(XlFixedFormatType.xlTypePDF, path);
+
+                    wb.Saved = true;
+                    wb.Save();
+                    wb.Close();
+                    excel.Quit();
+
+                    File.Delete(tempfile);
+                }
+                else
+                {
+                    Application excel = new Application();
+                    Workbook wb = excel.Workbooks.Open(tempfile);
+                    Worksheet sheet = (Worksheet)wb.ActiveSheet;
+
+                    reportInformation = "" + findValueByKey(gfiInformation, "company") + "iz " + findValueByKey(gfiInformation, "city") + ", ul. " + findValueByKey(gfiInformation, "address") + ", donijela je " + createCroatianDate() + ". ovu";
+                    excel.Cells["3", "A"].Value = reportInformation;
+
+                    reportInformation = "1. Utvrđuje se ostvareni dobitak za 2021. u svoti od " + findValueByKey(gfiInformation, "lossOrGainWithoutTax") + " kn.";
+                    excel.Cells["9", "A"].Value = reportInformation;
+
+                    reportInformation = "1.1. Utvrđuje se porez na dobit u svoti od " + findValueByKey(gfiInformation, "lossOrGainTax") + " kn.";
+                    excel.Cells["10", "A"].Value = reportInformation;
+
+                    reportInformation = "1.2. Utvrđuje se dobit umanjena za porez na dobit u svoti od " + findValueByKey(gfiInformation, "lossOrGainTotal") + " kn.";
+                    excel.Cells["11", "A"].Value = reportInformation;
+
+                    reportInformation = "2.2. Zadržani dobitak u svoti od " + createDecimalString(Convert.ToDouble(findValueByKey(gfiInformation, "lossOrGainTotal")) * 0.75) + " kn.";
+                    excel.Cells["14", "A"].Value = reportInformation;
+
+                    excel.Cells["24", "F"].Value = findValueByKey(gfiInformation, "director").ToUpper();
+
+                    string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "[ASISTENT] " + findValueByKey(gfiInformation, "company") + " ODLUKA O RASPODIJELI DOBITI.pdf");
+                    wb.ExportAsFixedFormat(XlFixedFormatType.xlTypePDF, path);
+
+                    wb.Saved = true;
+                    wb.Save();
+                    wb.Close();
+                    excel.Quit();
+
+                    File.Delete(tempfile);
+
+                }
+
                 ApplicationManager.killExcelProcesses();
                 return ErrorCodes.NoError;
             }

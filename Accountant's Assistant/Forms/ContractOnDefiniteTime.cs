@@ -9,6 +9,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -21,36 +22,6 @@ namespace Accountant_s_Assistant.Forms
         List<Employee> employees;
         private void setUpUI()
         {
-           employers = DatabaseManager.getAllEmployers();
-            if (!employers.Any())
-            {
-                MessageBox.Show("Lista poslodavaca je prazna.\nMolim da dodate poslodavce u listu!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                btnValidate.Enabled = false;
-            }
-            else
-            {
-                foreach (Employer employer in employers)
-                {
-                    cbEmployer.Items.Add(employer.Name);
-                    cbEmployer.ValueMember = employer.Id.ToString();
-                }
-            }
-
-            employees = DatabaseManager.getAllEmployees();
-            if (!employees.Any())
-            {
-                MessageBox.Show("Lista zaposlenika je prazna.\nMolim da dodate zaposlenike u listu!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                btnValidate.Enabled = false;
-            }
-            else
-            {
-                foreach (Employee employee in employees)
-                { 
-                    cbEmployee.Items.Add(employee.Name);
-                    cbEmployee.ValueMember = employee.Id.ToString();
-                }
-            }
-
             List<string> estates = DatabaseManager.getEstates();
             foreach (string estate in estates)
             {
@@ -318,6 +289,48 @@ namespace Accountant_s_Assistant.Forms
         private void btnOpenEmployerForm_Click(object sender, EventArgs e)
         {
             ApplicationManager.switchForm(this, new EmployerForm(), true);
+        }
+
+        private void ContractOnDefiniteTime_Shown(object sender, EventArgs e)
+        {
+            employers = DatabaseManager.getAllEmployers();
+            if (!employers.Any())
+            {
+                MessageBox.Show("Lista poslodavaca je prazna.\nMolim da dodate poslodavce u listu!", "Upozorenje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                btnValidate.Enabled = false;
+            }
+            else
+            {
+                foreach (Employer employer in employers)
+                {
+                    cbEmployer.Items.Add(employer.Name);
+                    cbEmployer.ValueMember = employer.Id.ToString();
+                }
+            }
+            employees = DatabaseManager.getAllEmployees();
+            if (!employees.Any())
+            {
+                MessageBox.Show("Lista zaposlenika je prazna.\nMolim da dodate zaposlenike u listu!", "Upozorenje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                btnValidate.Enabled = false;
+            }
+            else
+            {
+                foreach (Employee employee in employees)
+                {
+                    cbEmployee.Items.Add(employee.Name);
+                    cbEmployee.ValueMember = employee.Id.ToString();
+                }
+            }
+        }
+
+        private void cbEmployer_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbEmployee_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

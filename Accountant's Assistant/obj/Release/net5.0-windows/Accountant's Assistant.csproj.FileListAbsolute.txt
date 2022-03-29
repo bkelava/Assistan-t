@@ -1,0 +1,36 @@
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\bin\Release\net5.0-windows\Accountant's Assistant.exe
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\bin\Release\net5.0-windows\Accountant's Assistant.deps.json
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\bin\Release\net5.0-windows\Accountant's Assistant.runtimeconfig.json
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\bin\Release\net5.0-windows\Accountant's Assistant.runtimeconfig.dev.json
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\bin\Release\net5.0-windows\Accountant's Assistant.dll
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\bin\Release\net5.0-windows\ref\Accountant's Assistant.dll
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\bin\Release\net5.0-windows\Accountant's Assistant.pdb
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\bin\Release\net5.0-windows\Newtonsoft.Json.dll
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\obj\Release\net5.0-windows\Interop.Microsoft.Office.Interop.Excel.dll
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\obj\Release\net5.0-windows\Accountant's Assistant.csproj.ResolveComReference.cache
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\obj\Release\net5.0-windows\Accountant_s_Assistant.Form1.resources
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\obj\Release\net5.0-windows\Accountant_s_Assistant.Forms.ContractOnDefiniteTime.resources
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\obj\Release\net5.0-windows\Accountant_s_Assistant.Forms.EmployerForm.resources
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\obj\Release\net5.0-windows\Accountant_s_Assistant.Forms.GfiPod.resources
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\obj\Release\net5.0-windows\Accountant_s_Assistant.Properties.Resources.resources
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\obj\Release\net5.0-windows\Accountant's Assistant.csproj.GenerateResource.cache
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\obj\Release\net5.0-windows\Accountant's Assistant.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\obj\Release\net5.0-windows\Accountant's Assistant.AssemblyInfoInputs.cache
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\obj\Release\net5.0-windows\Accountant's Assistant.AssemblyInfo.cs
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\obj\Release\net5.0-windows\Accountant's Assistant.csproj.CoreCompileInputs.cache
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\obj\Release\net5.0-windows\Accountant's Assistant.csproj.CopyComplete
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\obj\Release\net5.0-windows\Accountant's Assistant.dll
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\obj\Release\net5.0-windows\ref\Accountant's Assistant.dll
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\obj\Release\net5.0-windows\Accountant's Assistant.pdb
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\obj\Release\net5.0-windows\Accountant's Assistant.genruntimeconfig.cache
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\bin\Release\net5.0-windows\Resources\TextProgressBar.cs
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\bin\Release\net5.0-windows\Resources\EstatesInCroatia.txt
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\bin\Release\net5.0-windows\Resources\logo_X5t_icon.ico
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\bin\Release\net5.0-windows\Resources\NKD.csv
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\bin\Release\net5.0-windows\Resources\template_biljeske.xlsx
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\bin\Release\net5.0-windows\Resources\template_contract_on_definitve_time.xlsx
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\bin\Release\net5.0-windows\Resources\template_odluka.xlsx
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\bin\Release\net5.0-windows\Resources\template_odluka_o_pokricu_gubitka.xlsx
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\bin\Release\net5.0-windows\Resources\template_contract_on_indefinitve_time .xlsx
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\obj\Release\net5.0-windows\Accountant_s_Assistant.Forms.ContractOnIndefiniteTime.resources
+C:\Users\KELAVA\source\repos\Accountant's Assistant\Accountant's Assistant\bin\Release\net5.0-windows\Resources\template_odluka_o_raspodjeli_dobiti_jdoo.xlsx

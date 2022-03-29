@@ -40,6 +40,7 @@ namespace Accountant_s_Assistant.Forms
             this.btnPrint = new System.Windows.Forms.Button();
             this.btnValidate = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.tbContractEntryComment = new System.Windows.Forms.TextBox();
             this.cbCompetentCourt = new System.Windows.Forms.ComboBox();
             this.dtpContractEntry = new System.Windows.Forms.DateTimePicker();
             this.dtpWorkTimeEndB = new System.Windows.Forms.DateTimePicker();
@@ -143,7 +144,6 @@ namespace Accountant_s_Assistant.Forms
             this.label3 = new System.Windows.Forms.Label();
             this.cbEmployer = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.tbContractEntryComment = new System.Windows.Forms.TextBox();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numNoticePeriodB)).BeginInit();
@@ -252,6 +252,7 @@ namespace Accountant_s_Assistant.Forms
             // 
             // panel3
             // 
+            this.panel3.BackColor = System.Drawing.Color.Navy;
             this.panel3.Controls.Add(this.tbContractEntryComment);
             this.panel3.Controls.Add(this.cbCompetentCourt);
             this.panel3.Controls.Add(this.dtpContractEntry);
@@ -361,6 +362,13 @@ namespace Accountant_s_Assistant.Forms
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(850, 1064);
             this.panel3.TabIndex = 2;
+            // 
+            // tbContractEntryComment
+            // 
+            this.tbContractEntryComment.Location = new System.Drawing.Point(342, 970);
+            this.tbContractEntryComment.Name = "tbContractEntryComment";
+            this.tbContractEntryComment.Size = new System.Drawing.Size(258, 22);
+            this.tbContractEntryComment.TabIndex = 109;
             // 
             // cbCompetentCourt
             // 
@@ -1549,13 +1557,6 @@ namespace Accountant_s_Assistant.Forms
             this.label2.TabIndex = 0;
             this.label2.Text = "Između";
             // 
-            // tbContractEntryComment
-            // 
-            this.tbContractEntryComment.Location = new System.Drawing.Point(342, 970);
-            this.tbContractEntryComment.Name = "tbContractEntryComment";
-            this.tbContractEntryComment.Size = new System.Drawing.Size(258, 22);
-            this.tbContractEntryComment.TabIndex = 109;
-            // 
             // ContractOnDefiniteTime
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1570,6 +1571,7 @@ namespace Accountant_s_Assistant.Forms
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ContractOnDefiniteTime";
             this.Load += new System.EventHandler(this.ContractOnDefiniteTime_Load);
+            this.Shown += new System.EventHandler(this.ContractOnDefiniteTime_Shown);
             this.panel2.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();

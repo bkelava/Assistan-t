@@ -64,5 +64,10 @@ namespace Accountant_s_Assistant
         {
             ApplicationManager.switchForm(this, new GfiPod(), true);
         }
+
+        private void btnContractOnIndefinitivePeriod_Click(object sender, EventArgs e)
+        {
+            ApplicationManager.switchForm(this, new ContractOnIndefiniteTime(), true);
+        }
     }
 }

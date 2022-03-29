@@ -16,17 +16,6 @@ namespace Accountant_s_Assistant.Database
             //empty
         }
 
-        private string TableName(string str)
-        {
-            if (str == null)
-                return null;
-
-            if (str.Length > 1)
-                return char.ToUpper(str[0]) + str.Substring(1);
-
-            return str.ToUpper();
-        }
-
         private static void appendToJsonFile(string filename, object list)
         {
             JArray array = JArray.FromObject(list);
@@ -67,7 +56,6 @@ namespace Accountant_s_Assistant.Database
                 EmployeeRoot myDeserializedClass = JsonConvert.DeserializeObject<EmployeeRoot>(json);
                 items = myDeserializedClass.Employee;
             }
-
             return items;
         }
 
