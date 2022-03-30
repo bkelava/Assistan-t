@@ -1,6 +1,4 @@
 ﻿using Accountant_s_Assistant.Database.Tables;
-using Accountant_s_Assistant.Forms;
-using Accountant_s_Assistant.Properties;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -71,6 +69,18 @@ namespace Accountant_s_Assistant.Database
             appendToJsonFile("employer.json", items);
         }
 
+        public static void insertIntoEmployees(Employee employee)
+        {
+            List<Employee> items = getAllEmployees();
+
+            int id = int.Parse(items[items.Count - 1].Id);
+            id = id + 1;
+            employee.Id = id.ToString();
+            items.Add(employee);
+
+            appendToJsonFile("employee.json", items);
+        }
+
         public static List<Employer> getAllEmployers()
         {
             string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Database/employer.json");
@@ -108,7 +118,25 @@ namespace Accountant_s_Assistant.Database
             var index = list.FindIndex(x => x.Id.Equals(employer.Id));
             list[index] = employer;
 
-            //appendToJsonFile("Employers.json")
+            appendToJsonFile("employer.json", list);
+        }
+
+        public static void alterEmployee(Employee employee)
+        {
+            List<Employee> list = getAllEmployees();
+            var index = list.FindIndex(x => x.Id.Equals(employee.Id));
+            list[index] = employee;
+
+            appendToJsonFile("employees.json", list);
+        }
+
+        public static void removeEmployer(string id)
+        {
+            List<Employer> list = getAllEmployers();
+            var index = list.FindIndex(x => x.Id.Equals(id));
+            list.RemoveAt(index);
+
+            appendToJsonFile("employer.json", list);
         }
     }
 }

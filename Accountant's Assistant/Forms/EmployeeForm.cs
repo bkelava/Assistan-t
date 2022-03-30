@@ -3,35 +3,28 @@ using Accountant_s_Assistant.Database;
 using Accountant_s_Assistant.Database.Tables;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Accountant_s_Assistant.Forms
 {
-    public partial class EmployerForm : Form
+    public partial class EmployeeForm : Form
     {
         private bool toggleBtnInsertMode;
-        private Employer employer;
-        private List<Employer> list;
-        public EmployerForm()
+        private bool validation;
+        private Employee employee;
+        private List<Employee> list;
+        public EmployeeForm()
         {
             InitializeComponent();
         }
-
-        private bool validation;
 
         private void btnClose_Click(object sender, EventArgs e)
         {
             if (App.EventHandler.sentFromForm1)
             {
                 App.EventHandler.sentFromForm1 = false;
-                ApplicationManager.switchForm(this, new Form1(), true);
+                ApplicationManager.closeForm(this);
             }
             else
             {
@@ -39,30 +32,29 @@ namespace Accountant_s_Assistant.Forms
             }
         }
 
-        private void addEmployer()
+        private void addEmployee()
         {
             if (makeChecks())
             {
-                Employer employer = new Employer();
+                Employee employee = new Employee();
 
-                employer.Name = tbEmployerName.Text;
-                employer.Address.Street = tbEmployerStreet.Text.ToString();
-                employer.Address.City = tbEmployerCity.Text;
-                employer.Address.PostalCode = tbEmployerPostal.Text;
-                employer.VAT = tbEmployerVAT.Text;
-                employer.Director = tbEmployerDirector.Text;
+                employee.Name = tbEmployeeName.Text;
+                employee.Address.Street = tbEmployeeStreet.Text.ToString();
+                employee.Address.City = tbEmployeeCity.Text;
+                employee.Address.PostalCode = tbEmployeePostal.Text;
+                employee.VAT = tbEmployeeVAT.Text;
+                employee.Birthday = tbEmployeeBirthDay.Text;
 
-                DatabaseManager.insertIntoEmployers(employer);
+                DatabaseManager.insertIntoEmployees(employee);
 
-                MessageBox.Show("Poslodavac unesen.", "Informacija", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Radnik unesen.", "Informacija", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 clearFields();
-                btnRefresh.Show();
             }
             else
             {
                 MessageBox.Show("Greška!\nMolim da ispunite sva potrebna polja!", "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }    
+            }
         }
 
         private bool makeChecks()
@@ -81,12 +73,12 @@ namespace Accountant_s_Assistant.Forms
 
         private void clearFields()
         {
-            tbEmployerName.Text = "";
-            tbEmployerStreet.Text = "";
-            tbEmployerCity.Text = "";
-            tbEmployerPostal.Text = "";
-            tbEmployerVAT.Text = "";
-            tbEmployerDirector.Text = "";
+            tbEmployeeName.Text = "";
+            tbEmployeeStreet.Text = "";
+            tbEmployeeCity.Text = "";
+            tbEmployeePostal.Text = "";
+            tbEmployeeVAT.Text = "";
+            tbEmployeeBirthDay.Text = "";
 
             if (toggleBtnInsertMode)
             {
@@ -97,22 +89,22 @@ namespace Accountant_s_Assistant.Forms
             {
                 btnInsert.Text = "Unesi";
             }
-
-            btnRemoveEmployer.Enabled = false;
+            btnRemoveEmployee.Enabled = false;
         }
 
         private void setTextBoxMaxLength()
         {
-            tbEmployerName.MaxLength = 30;
-            tbEmployerStreet.MaxLength = 40;
-            tbEmployerCity.MaxLength = 15;
-            tbEmployerPostal.MaxLength = 5;
-            tbEmployerVAT.MaxLength = 11;
-            tbEmployerDirector.MaxLength = 50;
+            tbEmployeeName.MaxLength = 30;
+            tbEmployeeStreet.MaxLength = 40;
+            tbEmployeeCity.MaxLength = 15;
+            tbEmployeePostal.MaxLength = 5;
+            tbEmployeeVAT.MaxLength = 11;
+            tbEmployeeBirthDay.MaxLength = 50;
         }
 
-        private void EmployerForm_Load(object sender, EventArgs e)
+        private void EmployeeForm_Load(object sender, EventArgs e)
         {
+            btnRemoveEmployee.Enabled = false;
             init();
             setTextBoxMaxLength();
             clearFields();
@@ -122,62 +114,68 @@ namespace Accountant_s_Assistant.Forms
         private void init()
         {
             validation = true;
-            employer = null;
+            employee = null;
             toggleBtnInsertMode = false;
-            btnRemoveEmployer.Enabled = false;
-            btnRefresh.Hide();
-            list = DatabaseManager.getAllEmployers();
+
+            list = DatabaseManager.getAllEmployees();
         }
 
         private void populateDataGridView()
         {
-            dgvEmployers.Columns.Add("Id", "Id");
-            dgvEmployers.Columns.Add("Name", "Naziv");
-            dgvEmployers.Columns.Add("Address", "Adresa");
-            dgvEmployers.Columns.Add("VAT", "OIB");
-            dgvEmployers.Columns.Add("Director", "Direktor");
+            dgvEmployees.Columns.Add("Id", "Id");
+            dgvEmployees.Columns.Add("Name", "Naziv");
+            dgvEmployees.Columns.Add("Address", "Adresa");
+            dgvEmployees.Columns.Add("VAT", "OIB");
+            dgvEmployees.Columns.Add("Director", "Direktor");
 
             for (int i = 0; i <list.Count; i++)
             {
-                dgvEmployers.Rows.Add(
+                dgvEmployees.Rows.Add(
                     list[i].Id,
                     list[i].Name,
                     list[i].Address.Street + ", " + list[i].Address.PostalCode + " " + list[i].Address.City,
                     list[i].VAT,
-                    list[i].Director
+                    list[i].Birthday
                     );
             }
+            /*foreach (DataGridViewRow row in dgvEmployers.Rows)
+            {
+                employer = list.Find(x => x.Id.Equals(row.Cells["Id"].Value.ToString()));
+                dgvEmployers[columnName, index].Value = "2";//(employer.Address.Street + ", " + employer.Address.PostalCode + " " + employer.Address.City).ToString();
+            }*/
         }
 
         private void btnInsert_Click(object sender, EventArgs e)
         {
             if (toggleBtnInsertMode)
             {
-                alterEmployer();
-                
+                alterEmployee();
             }
             else
             {
-                addEmployer();
+                addEmployee();
+                dgvEmployees.Update();
+                dgvEmployees.Refresh();
             }
         }
 
-        private void alterEmployer()
+        private void alterEmployee()
         {
-            DatabaseManager.alterEmployer(employer);
+            DatabaseManager.alterEmployee(employee);
+            
         }
 
         private void tbEmployerVAT_TextChanged(object sender, EventArgs e)
         {
             long VAT = 12345678912;
 
-            string VATtext = tbEmployerVAT.Text;
+            string VATtext = tbEmployeeVAT.Text;
             if (!long.TryParse(VATtext, out VAT) && !VATtext.Equals(""))
             {
                 MessageBox.Show("OIB može sadržavati isključivo 11 znamenki.", "Upozorenje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 VATtext = VATtext.Substring(0, VATtext.Length - 1);
-                tbEmployerVAT.Text = VATtext;
-                tbEmployerVAT.SelectionStart = tbEmployerVAT.TextLength;
+                tbEmployeeVAT.Text = VATtext;
+                tbEmployeeVAT.SelectionStart = tbEmployeeVAT.TextLength;
                 return;
             }
         }
@@ -186,13 +184,13 @@ namespace Accountant_s_Assistant.Forms
         {
             long postal;
 
-            string postalText = tbEmployerPostal.Text;
+            string postalText = tbEmployeePostal.Text;
             if (!long.TryParse(postalText, out postal) && !postalText.Equals(""))
             {
                 MessageBox.Show("Poštanski broj može sadržavati isključivo 5 znamenki.", "Upozorenje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 postalText = postalText.Substring(0, postalText.Length - 1);
-                tbEmployerPostal.Text = postalText;
-                tbEmployerPostal.SelectionStart = tbEmployerPostal.TextLength;
+                tbEmployeePostal.Text = postalText;
+                tbEmployeePostal.SelectionStart = tbEmployeePostal.TextLength;
                 return;
             }
         }
@@ -202,18 +200,18 @@ namespace Accountant_s_Assistant.Forms
             toggleBtnInsertMode = true;
             if (e.RowIndex >= 0)
             {
-                DataGridViewRow row = this.dgvEmployers.Rows[e.RowIndex];
-                employer = list.Find(x => x.Id.Equals(row.Cells["Id"].Value.ToString()));
+                DataGridViewRow row = this.dgvEmployees.Rows[e.RowIndex];
+                employee = list.Find(x => x.Id.Equals(row.Cells["Id"].Value.ToString()));
 
-                tbEmployerName.Text = employer.Name;
-                tbEmployerStreet.Text = employer.Address.Street;
-                tbEmployerCity.Text = employer.Address.City;
-                tbEmployerPostal.Text = employer.Address.PostalCode;
-                tbEmployerVAT.Text = employer.VAT;
-                tbEmployerDirector.Text = employer.Director;
+                tbEmployeeName.Text = employee.Name;
+                tbEmployeeStreet.Text = employee.Address.Street;
+                tbEmployeeCity.Text = employee.Address.City;
+                tbEmployeePostal.Text = employee.Address.PostalCode;
+                tbEmployeeVAT.Text = employee.VAT;
+                tbEmployeeBirthDay.Text = employee.Birthday;
             }
             btnInsert.Text = "Promijeni\npodatke";
-            btnRemoveEmployer.Enabled = true;
+            btnRemoveEmployee.Enabled = true;
         }
 
         private void btnClearFields_Click(object sender, EventArgs e)
@@ -223,25 +221,7 @@ namespace Accountant_s_Assistant.Forms
 
         private void btnRemoveEmployer_Click(object sender, EventArgs e)
         {
-            if (tbEmployerVAT.Text.Equals(""))
-            {
-                MessageBox.Show("Polja su prazna!", "Greška", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            string vat = tbEmployerVAT.Text;
-
-            string id = list.Find(x => x.VAT == vat).Id;
-            label1.Text = id;
-            DatabaseManager.removeEmployer(id);
-
-            clearFields();
-            btnRefresh.Show();
-        }
-
-        private void btnRefresh_Click(object sender, EventArgs e)
-        {
-            dgvEmployers.Rows.Clear();
-            populateDataGridView();
-            btnRefresh.Hide();
+            
         }
     }
 }

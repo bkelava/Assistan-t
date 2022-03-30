@@ -55,8 +55,7 @@ namespace Accountant_s_Assistant
 
         private void btnEmployers_Click(object sender, EventArgs e)
         {
-            ApplicationManager.putFromIntoPanel(new EmployerForm(), panelForm);
-            btnEmployers.Hide();
+            ApplicationManager.switchForm(this, new EmployerForm(), true);
             App.EventHandler.sentFromForm1 = true;
         }
 

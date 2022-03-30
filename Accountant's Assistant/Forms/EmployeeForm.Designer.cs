@@ -1,7 +1,7 @@
 ﻿
 namespace Accountant_s_Assistant.Forms
 {
-    partial class EmployerForm
+    partial class EmployeeForm
     {
         /// <summary>
         /// Required designer variable.
@@ -31,19 +31,18 @@ namespace Accountant_s_Assistant.Forms
         {
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnClose = new System.Windows.Forms.Button();
-            this.btnRemoveEmployer = new System.Windows.Forms.Button();
+            this.btnRemoveEmployee = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
-            this.dgvEmployers = new System.Windows.Forms.DataGridView();
+            this.dgvEmployees = new System.Windows.Forms.DataGridView();
             this.btnClearFields = new System.Windows.Forms.Button();
             this.btnInsert = new System.Windows.Forms.Button();
-            this.tbEmployerDirector = new System.Windows.Forms.TextBox();
-            this.tbEmployerCity = new System.Windows.Forms.TextBox();
-            this.tbEmployerPostal = new System.Windows.Forms.TextBox();
+            this.tbEmployeeBirthDay = new System.Windows.Forms.TextBox();
+            this.tbEmployeeCity = new System.Windows.Forms.TextBox();
+            this.tbEmployeePostal = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.btnRefresh = new System.Windows.Forms.Button();
-            this.tbEmployerStreet = new System.Windows.Forms.TextBox();
-            this.tbEmployerVAT = new System.Windows.Forms.TextBox();
-            this.tbEmployerName = new System.Windows.Forms.TextBox();
+            this.tbEmployeeStreet = new System.Windows.Forms.TextBox();
+            this.tbEmployeeVAT = new System.Windows.Forms.TextBox();
+            this.tbEmployeeName = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -51,12 +50,13 @@ namespace Accountant_s_Assistant.Forms
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvEmployers)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvEmployees)).BeginInit();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(60)))));
             this.panel1.Controls.Add(this.btnClose);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
@@ -80,41 +80,41 @@ namespace Accountant_s_Assistant.Forms
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
-            // btnRemoveEmployer
+            // btnRemoveEmployee
             // 
-            this.btnRemoveEmployer.FlatAppearance.BorderSize = 0;
-            this.btnRemoveEmployer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRemoveEmployer.Location = new System.Drawing.Point(784, 259);
-            this.btnRemoveEmployer.Name = "btnRemoveEmployer";
-            this.btnRemoveEmployer.Size = new System.Drawing.Size(107, 57);
-            this.btnRemoveEmployer.TabIndex = 17;
-            this.btnRemoveEmployer.Text = "Obriši poslodavca";
-            this.btnRemoveEmployer.UseVisualStyleBackColor = true;
-            this.btnRemoveEmployer.Click += new System.EventHandler(this.btnRemoveEmployer_Click);
+            this.btnRemoveEmployee.FlatAppearance.BorderSize = 0;
+            this.btnRemoveEmployee.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRemoveEmployee.Location = new System.Drawing.Point(784, 259);
+            this.btnRemoveEmployee.Name = "btnRemoveEmployee";
+            this.btnRemoveEmployee.Size = new System.Drawing.Size(107, 57);
+            this.btnRemoveEmployee.TabIndex = 17;
+            this.btnRemoveEmployee.Text = "Obriši poslodavca";
+            this.btnRemoveEmployee.UseVisualStyleBackColor = true;
+            this.btnRemoveEmployee.Click += new System.EventHandler(this.btnRemoveEmployer_Click);
             // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(365, 362);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(228, 16);
+            this.label7.Size = new System.Drawing.Size(190, 16);
             this.label7.TabIndex = 16;
-            this.label7.Text = "Pregled unesenih poslodavaca";
+            this.label7.Text = "Pregled unesenih radnika";
             // 
-            // dgvEmployers
+            // dgvEmployees
             // 
-            this.dgvEmployers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvEmployers.BackgroundColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.dgvEmployers.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgvEmployers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvEmployers.Location = new System.Drawing.Point(36, 391);
-            this.dgvEmployers.Name = "dgvEmployers";
-            this.dgvEmployers.ReadOnly = true;
-            this.dgvEmployers.RowTemplate.Height = 25;
-            this.dgvEmployers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvEmployers.Size = new System.Drawing.Size(855, 188);
-            this.dgvEmployers.TabIndex = 15;
-            this.dgvEmployers.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEmployers_CellContentClick);
+            this.dgvEmployees.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvEmployees.BackgroundColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.dgvEmployees.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvEmployees.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvEmployees.Location = new System.Drawing.Point(36, 391);
+            this.dgvEmployees.Name = "dgvEmployees";
+            this.dgvEmployees.ReadOnly = true;
+            this.dgvEmployees.RowTemplate.Height = 25;
+            this.dgvEmployees.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvEmployees.Size = new System.Drawing.Size(855, 188);
+            this.dgvEmployees.TabIndex = 15;
+            this.dgvEmployees.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEmployers_CellContentClick);
             // 
             // btnClearFields
             // 
@@ -140,42 +140,42 @@ namespace Accountant_s_Assistant.Forms
             this.btnInsert.UseVisualStyleBackColor = true;
             this.btnInsert.Click += new System.EventHandler(this.btnInsert_Click);
             // 
-            // tbEmployerDirector
+            // tbEmployeeBirthDay
             // 
-            this.tbEmployerDirector.Location = new System.Drawing.Point(242, 295);
-            this.tbEmployerDirector.Name = "tbEmployerDirector";
-            this.tbEmployerDirector.Size = new System.Drawing.Size(518, 23);
-            this.tbEmployerDirector.TabIndex = 12;
+            this.tbEmployeeBirthDay.Location = new System.Drawing.Point(242, 295);
+            this.tbEmployeeBirthDay.Name = "tbEmployeeBirthDay";
+            this.tbEmployeeBirthDay.Size = new System.Drawing.Size(518, 23);
+            this.tbEmployeeBirthDay.TabIndex = 12;
             // 
-            // tbEmployerCity
+            // tbEmployeeCity
             // 
-            this.tbEmployerCity.Location = new System.Drawing.Point(242, 167);
-            this.tbEmployerCity.Name = "tbEmployerCity";
-            this.tbEmployerCity.Size = new System.Drawing.Size(518, 23);
-            this.tbEmployerCity.TabIndex = 10;
+            this.tbEmployeeCity.Location = new System.Drawing.Point(242, 167);
+            this.tbEmployeeCity.Name = "tbEmployeeCity";
+            this.tbEmployeeCity.Size = new System.Drawing.Size(518, 23);
+            this.tbEmployeeCity.TabIndex = 10;
             // 
-            // tbEmployerPostal
+            // tbEmployeePostal
             // 
-            this.tbEmployerPostal.Location = new System.Drawing.Point(242, 212);
-            this.tbEmployerPostal.Name = "tbEmployerPostal";
-            this.tbEmployerPostal.Size = new System.Drawing.Size(518, 23);
-            this.tbEmployerPostal.TabIndex = 9;
-            this.tbEmployerPostal.TextChanged += new System.EventHandler(this.tbEmployerPostal_TextChanged);
+            this.tbEmployeePostal.Location = new System.Drawing.Point(242, 212);
+            this.tbEmployeePostal.Name = "tbEmployeePostal";
+            this.tbEmployeePostal.Size = new System.Drawing.Size(518, 23);
+            this.tbEmployeePostal.TabIndex = 9;
+            this.tbEmployeePostal.TextChanged += new System.EventHandler(this.tbEmployerPostal_TextChanged);
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.btnRefresh);
-            this.panel2.Controls.Add(this.tbEmployerStreet);
-            this.panel2.Controls.Add(this.btnRemoveEmployer);
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(60)))));
+            this.panel2.Controls.Add(this.tbEmployeeStreet);
+            this.panel2.Controls.Add(this.btnRemoveEmployee);
             this.panel2.Controls.Add(this.label7);
-            this.panel2.Controls.Add(this.dgvEmployers);
+            this.panel2.Controls.Add(this.dgvEmployees);
             this.panel2.Controls.Add(this.btnClearFields);
             this.panel2.Controls.Add(this.btnInsert);
-            this.panel2.Controls.Add(this.tbEmployerDirector);
-            this.panel2.Controls.Add(this.tbEmployerCity);
-            this.panel2.Controls.Add(this.tbEmployerPostal);
-            this.panel2.Controls.Add(this.tbEmployerVAT);
-            this.panel2.Controls.Add(this.tbEmployerName);
+            this.panel2.Controls.Add(this.tbEmployeeBirthDay);
+            this.panel2.Controls.Add(this.tbEmployeeCity);
+            this.panel2.Controls.Add(this.tbEmployeePostal);
+            this.panel2.Controls.Add(this.tbEmployeeVAT);
+            this.panel2.Controls.Add(this.tbEmployeeName);
             this.panel2.Controls.Add(this.label6);
             this.panel2.Controls.Add(this.label5);
             this.panel2.Controls.Add(this.label4);
@@ -188,39 +188,27 @@ namespace Accountant_s_Assistant.Forms
             this.panel2.Size = new System.Drawing.Size(923, 618);
             this.panel2.TabIndex = 18;
             // 
-            // btnRefresh
+            // tbEmployeeStreet
             // 
-            this.btnRefresh.FlatAppearance.BorderSize = 0;
-            this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRefresh.Location = new System.Drawing.Point(599, 356);
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(73, 29);
-            this.btnRefresh.TabIndex = 19;
-            this.btnRefresh.Text = "Osvježi";
-            this.btnRefresh.UseVisualStyleBackColor = true;
-            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            this.tbEmployeeStreet.Location = new System.Drawing.Point(242, 127);
+            this.tbEmployeeStreet.Name = "tbEmployeeStreet";
+            this.tbEmployeeStreet.Size = new System.Drawing.Size(518, 23);
+            this.tbEmployeeStreet.TabIndex = 18;
             // 
-            // tbEmployerStreet
+            // tbEmployeeVAT
             // 
-            this.tbEmployerStreet.Location = new System.Drawing.Point(242, 127);
-            this.tbEmployerStreet.Name = "tbEmployerStreet";
-            this.tbEmployerStreet.Size = new System.Drawing.Size(518, 23);
-            this.tbEmployerStreet.TabIndex = 18;
+            this.tbEmployeeVAT.Location = new System.Drawing.Point(242, 252);
+            this.tbEmployeeVAT.Name = "tbEmployeeVAT";
+            this.tbEmployeeVAT.Size = new System.Drawing.Size(518, 23);
+            this.tbEmployeeVAT.TabIndex = 8;
+            this.tbEmployeeVAT.TextChanged += new System.EventHandler(this.tbEmployerVAT_TextChanged);
             // 
-            // tbEmployerVAT
+            // tbEmployeeName
             // 
-            this.tbEmployerVAT.Location = new System.Drawing.Point(242, 252);
-            this.tbEmployerVAT.Name = "tbEmployerVAT";
-            this.tbEmployerVAT.Size = new System.Drawing.Size(518, 23);
-            this.tbEmployerVAT.TabIndex = 8;
-            this.tbEmployerVAT.TextChanged += new System.EventHandler(this.tbEmployerVAT_TextChanged);
-            // 
-            // tbEmployerName
-            // 
-            this.tbEmployerName.Location = new System.Drawing.Point(242, 84);
-            this.tbEmployerName.Name = "tbEmployerName";
-            this.tbEmployerName.Size = new System.Drawing.Size(518, 23);
-            this.tbEmployerName.TabIndex = 7;
+            this.tbEmployeeName.Location = new System.Drawing.Point(242, 84);
+            this.tbEmployeeName.Name = "tbEmployeeName";
+            this.tbEmployeeName.Size = new System.Drawing.Size(518, 23);
+            this.tbEmployeeName.TabIndex = 7;
             // 
             // label6
             // 
@@ -236,9 +224,9 @@ namespace Accountant_s_Assistant.Forms
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(50, 302);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(135, 16);
+            this.label5.Size = new System.Drawing.Size(115, 16);
             this.label5.TabIndex = 5;
-            this.label5.Text = "Odgovorna osoba";
+            this.label5.Text = "Datum rođenja";
             // 
             // label4
             // 
@@ -272,11 +260,11 @@ namespace Accountant_s_Assistant.Forms
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(50, 92);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(134, 16);
+            this.label1.Size = new System.Drawing.Size(105, 16);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Naziv poslodavca";
+            this.label1.Text = "Naziv radnika";
             // 
-            // EmployerForm
+            // EmployeeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -288,12 +276,12 @@ namespace Accountant_s_Assistant.Forms
             this.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.Name = "EmployerForm";
+            this.Name = "EmployeeForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "EmployerForm";
-            this.Load += new System.EventHandler(this.EmployerForm_Load);
+            this.Text = "EmployeeForm";
+            this.Load += new System.EventHandler(this.EmployeeForm_Load);
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvEmployers)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvEmployees)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.ResumeLayout(false);
@@ -310,18 +298,17 @@ namespace Accountant_s_Assistant.Forms
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox tbEmployerName;
-        private System.Windows.Forms.TextBox tbEmployerVAT;
-        private System.Windows.Forms.TextBox tbEmployerPostal;
-        private System.Windows.Forms.TextBox tbEmployerCity;
-        private System.Windows.Forms.TextBox tbEmployerDirector;
+        private System.Windows.Forms.TextBox tbEmployeeName;
+        private System.Windows.Forms.TextBox tbEmployeeVAT;
+        private System.Windows.Forms.TextBox tbEmployeePostal;
+        private System.Windows.Forms.TextBox tbEmployeeCity;
+        private System.Windows.Forms.TextBox tbEmployeeBirthDay;
         private System.Windows.Forms.Button btnInsert;
         private System.Windows.Forms.Button btnClearFields;
-        private System.Windows.Forms.DataGridView dgvEmployers;
+        private System.Windows.Forms.DataGridView dgvEmployees;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Button btnRemoveEmployer;
+        private System.Windows.Forms.Button btnRemoveEmployee;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.TextBox tbEmployerStreet;
-        private System.Windows.Forms.Button btnRefresh;
+        private System.Windows.Forms.TextBox tbEmployeeStreet;
     }
 }

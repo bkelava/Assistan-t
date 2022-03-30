@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Accountant_s_Assistant.Database
+﻿namespace Accountant_s_Assistant.Database
 {
     class DatabaseSchema
     {

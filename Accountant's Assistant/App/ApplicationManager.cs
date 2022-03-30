@@ -20,23 +20,6 @@ namespace Accountant_s_Assistant.App
         {
             form.Close();
         }
-        public static void switchForm(bool close, Form oldForm, Form newForm)
-        {
-            if (close)
-            {
-                oldForm.Enabled = false;
-                oldForm.Close();
-
-                newForm.Enabled = true;
-            }
-            else
-            {
-                oldForm.Enabled = false;
-                oldForm.Hide();
-
-                newForm.Enabled = true;
-            }
-        }
 
         public static void switchForm(Form oldForm, Form newForm, bool hide)
         {
